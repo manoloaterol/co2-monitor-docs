@@ -1,0 +1,35 @@
+/* Brand colours. The green is the "good air" colour of the monitor's own
+   scale (#76B043), darkened so white text on the header stays readable. */
+:root {
+  --md-primary-fg-color:        #3F7A2A;
+  --md-primary-fg-color--light: #76B043;
+  --md-primary-fg-color--dark:  #2F5C1F;
+  --md-accent-fg-color:         #5E9A34;
+}
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color:        #2F5C1F;
+  --md-accent-fg-color:         #8CC45A;
+}
+
+/* CO2 scale swatches used in the tables. */
+.co2 {
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  border-radius: 3px;
+  vertical-align: -0.15em;
+  margin-right: 0.4em;
+}
+.co2.green  { background: #76B043; }
+.co2.yellow { background: #F2D02E; }
+.co2.orange { background: #E07B26; }
+.co2.red    { background: #9E2B25; }
+
+/* Placeholder for photos that do not exist yet. */
+.photo-todo {
+  border: 2px dashed var(--md-default-fg-color--lighter);
+  border-radius: 6px;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--md-default-fg-color--light);
+}

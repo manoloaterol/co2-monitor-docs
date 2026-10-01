@@ -1,0 +1,4 @@
+# Material for MkDocs is in maintenance mode and does not work with MkDocs 2.0,
+# so both are pinned. See README.md.
+mkdocs==1.6.1
+mkdocs-material==9.7.7

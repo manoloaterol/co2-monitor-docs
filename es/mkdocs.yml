@@ -1,0 +1,43 @@
+INHERIT: ../base.yml
+
+site_name: Medidor de CO₂
+site_description: Manual del medidor de CO₂, un medidor NDIR de CO₂, temperatura y humedad con MQTT y Home Assistant.
+docs_dir: docs
+site_dir: ../site/es
+
+theme:
+  language: es
+  # Lists are not merged with base.yml, so the palette is repeated here only
+  # to translate the toggle tooltips.
+  palette:
+    - media: "(prefers-color-scheme)"
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-auto
+        name: Cambiar a modo claro
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Cambiar a modo oscuro
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: Usar el modo del sistema
+
+nav:
+  - Inicio: index.md
+  - Primeros pasos: getting-started.md
+  - Guía de uso: user-guide.md
+  - Página web y ajustes: web-page.md
+  - MQTT y Home Assistant: mqtt.md
+  - Calibración: calibration.md
+  - Actualizar el firmware: firmware-update.md
+  - Ayuda: help.md
+  - Licencias: licences.md

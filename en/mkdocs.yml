@@ -1,0 +1,20 @@
+INHERIT: ../base.yml
+
+site_name: CO₂ Monitor
+site_description: User manual for the CO₂ Monitor, an NDIR CO₂, temperature and humidity monitor with MQTT and Home Assistant support.
+docs_dir: docs
+site_dir: ../site/en
+
+theme:
+  language: en
+
+nav:
+  - Home: index.md
+  - Getting started: getting-started.md
+  - User guide: user-guide.md
+  - Web page & settings: web-page.md
+  - MQTT & Home Assistant: mqtt.md
+  - Calibration: calibration.md
+  - Firmware update: firmware-update.md
+  - Help: help.md
+  - Licences: licences.md
