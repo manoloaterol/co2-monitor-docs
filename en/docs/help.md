@@ -39,6 +39,13 @@ good thermometer. See [Temperature](calibration.md#temperature).
 If it loses the Wi-Fi, the monitor never gives up. It retries more and more
 slowly: 1 s, 2 s, 4 s… up to one attempt a minute.
 
+## The Wi-Fi is weak where I want to put it
+
+The monitor connects straight to your router, like any other Wi-Fi device.
+If the signal is weak where you want it, extend your Wi-Fi with a repeater or
+a mesh Wi-Fi system. The monitor joins it as an ordinary device, and its web
+page, `.local` address and updates keep working.
+
 ## The `.local` address does not open
 
 The `co2-monitor-xxxxxx.local` name relies on mDNS. Most computers and phones

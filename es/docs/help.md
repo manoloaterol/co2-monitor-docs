@@ -43,6 +43,14 @@ buen termómetro. Ver [Temperatura](calibration.md#temperatura).
 Si pierde la Wi-Fi, el medidor no se rinde nunca. Reintenta cada vez más
 espaciado: 1 s, 2 s, 4 s… hasta un intento por minuto.
 
+## La Wi-Fi llega débil donde quiero ponerlo
+
+El medidor se conecta directamente a tu router, como cualquier otro aparato
+Wi-Fi. Si la señal llega débil donde quieres ponerlo, amplía tu Wi-Fi con un
+repetidor o un sistema Wi-Fi mesh. El medidor se une a él como un aparato más,
+y su página web, la dirección `.local` y las actualizaciones siguen
+funcionando.
+
 ## La dirección `.local` no abre
 
 El nombre `co2-monitor-xxxxxx.local` funciona con mDNS. La mayoría de los
