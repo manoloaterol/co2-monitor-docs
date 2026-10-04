@@ -18,7 +18,7 @@ it can be at most 63 characters long.
 | `<base>/humidity` | % relative humidity, integer: `48` | optional | 0 |
 | `<base>/state` | All three as JSON: `{"co2":812,"temperature":22.4,"humidity":48}` | optional | 0 |
 | `<base>/status` | `online` / `offline` | yes | 1 |
-| `<base>/info` | Diagnostics as JSON: `fw`, `hw`, `sensor_fw`, `ip`, `mac`, `hostname`, `rssi`, `uptime_s` | yes | 1 on connect, 0 after |
+| `<base>/info` | Diagnostics as JSON: `fw`, `hw`, `sensor_fw`, `ip`, `mac`, `hostname`, `rssi`, `uptime_s`, `chart_bar_s` (seconds per chart bar, which is also how often readings are published) | yes | 1 on connect, 0 after |
 
 - **How often.** Readings are published once per chart bar, as the average
   of the sensor's readings over that time. By default that is every 20 s, the
@@ -106,7 +106,9 @@ name is the **Name** setting on the web page.
 
 Discovery uses retained messages under `homeassistant/sensor/…/config`,
 which point to the same topics as above. Clients that are not Home Assistant
-simply ignore them.
+simply ignore them. The CO₂ sensor also carries the `chart_bar_s` attribute,
+taken from `info`, so the dashboard card below draws the same chart as the
+display.
 
 If Home Assistant uses another discovery prefix, change **Discovery prefix**
 to match it. If you turn discovery off or change the prefix, the monitor
@@ -128,7 +130,7 @@ The three screens rotate like a carousel, and a tap moves to the next one.
 2. Find **CO2 Monitor Card** in HACS, download it and reload the browser.
 3. Edit a dashboard, choose **Add card** and search for **CO2 Monitor**.
 
-The card picks your monitor and its sensors on its own. Set **Seconds per
-bar** to the value on the monitor's web page, so the card draws the same chart
-as the display. The card's page explains every option and how to install it
-without HACS.
+The card picks your monitor and its sensors on its own, and takes the
+seconds per bar from the monitor, so its chart matches the display. It can show
+more bars than the display, as a longer stretch of history. The card's page
+explains every option and how to install it without HACS.

@@ -18,7 +18,7 @@ pasar de 63 caracteres.
 | `<base>/humidity` | % de humedad relativa, entero: `48` | opcional | 0 |
 | `<base>/state` | Las tres en JSON: `{"co2":812,"temperature":22.4,"humidity":48}` | opcional | 0 |
 | `<base>/status` | `online` / `offline` | sí | 1 |
-| `<base>/info` | Diagnóstico en JSON: `fw`, `hw`, `sensor_fw`, `ip`, `mac`, `hostname`, `rssi`, `uptime_s` | sí | 1 al conectar, 0 después |
+| `<base>/info` | Diagnóstico en JSON: `fw`, `hw`, `sensor_fw`, `ip`, `mac`, `hostname`, `rssi`, `uptime_s`, `chart_bar_s` (segundos por barra de la gráfica, que es también el periodo de publicación) | sí | 1 al conectar, 0 después |
 
 - **Cadencia.** Las lecturas se publican una vez por barra de la gráfica,
   con la media de las lecturas del sensor en ese tiempo. Por defecto, cada
@@ -109,7 +109,9 @@ nombre es el ajuste **Nombre** de la página web.
 
 El descubrimiento usa mensajes retenidos en `homeassistant/sensor/…/config`,
 que apuntan a los mismos topics de arriba. Los clientes que no son Home
-Assistant simplemente los ignoran.
+Assistant simplemente los ignoran. El sensor de CO₂ lleva además el atributo
+`chart_bar_s`, sacado de `info`, para que la tarjeta de más abajo dibuje la
+misma gráfica que la pantalla.
 
 Si Home Assistant usa otro prefijo de descubrimiento, cambia **Prefijo de
 Discovery** para que coincida. Si desactivas el alta o cambias el prefijo, el
@@ -132,7 +134,7 @@ carrusel, y un toque pasa a la siguiente.
 2. Busca **CO2 Monitor Card** en HACS, descárgala y recarga el navegador.
 3. Edita un panel, elige **Añadir tarjeta** (*Add card*) y busca **CO2 Monitor**.
 
-La tarjeta encuentra sola el medidor y sus sensores. Pon en **Segundos por
-barra** el mismo valor que en la página web del medidor, para que la tarjeta
-dibuje la misma gráfica que la pantalla. La página de la tarjeta explica todas
-las opciones y cómo instalarla sin HACS.
+La tarjeta encuentra sola el medidor y sus sensores, y toma del medidor los
+segundos por barra, así que su gráfica coincide con la de la pantalla. Puede
+mostrar más barras que la pantalla, como un tramo más largo del historial. La
+página de la tarjeta explica todas las opciones y cómo instalarla sin HACS.
