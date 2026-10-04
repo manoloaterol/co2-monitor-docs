@@ -115,3 +115,24 @@ Si Home Assistant usa otro prefijo de descubrimiento, cambia **Prefijo de
 Discovery** para que coincida. Si desactivas el alta o cambias el prefijo, el
 medidor borra al reiniciar los mensajes de descubrimiento antiguos. Home
 Assistant elimina entonces las entidades en lugar de dejarlas huérfanas.
+
+### Tarjeta para el panel
+
+La **CO2 Monitor Card** muestra las pantallas del medidor en un panel de Home
+Assistant: la misma disposición, las mismas fuentes y la misma escala de
+colores, con la gráfica del historial. Las tres pantallas giran como un
+carrusel, y un toque pasa a la siguiente.
+
+<div class="photo-todo" markdown>
+**TODO:** captura de la tarjeta
+</div>
+
+1. En HACS, abre el menú (⋮), elige **Repositorios personalizados** (*Custom repositories*) y añade
+   **TODO: URL del repositorio de la tarjeta** con el tipo **Dashboard**.
+2. Busca **CO2 Monitor Card** en HACS, descárgala y recarga el navegador.
+3. Edita un panel, elige **Añadir tarjeta** (*Add card*) y busca **CO2 Monitor**.
+
+La tarjeta encuentra sola el medidor y sus sensores. Pon en **Segundos por
+barra** el mismo valor que en la página web del medidor, para que la tarjeta
+dibuje la misma gráfica que la pantalla. La página de la tarjeta explica todas
+las opciones y cómo instalarla sin HACS.

@@ -6,9 +6,9 @@ Move the joystick **left or right** to change screen.
 
 | Screen | Shows |
 |---|---|
+| **Big CO₂** | Only the value, 85 px tall, framed in the colour of its level. It can be read from across the room. This is the screen at start-up |
 | **CO₂** | The CO₂ value in large digits and its history chart |
 | **CO₂ + climate** | The same, plus temperature and humidity |
-| **Big CO₂** | Only the value, 85 px tall, framed in the colour of its level. It can be read from across the room |
 
 <div class="photo-todo" markdown>
 **TODO:** photos of the three screens

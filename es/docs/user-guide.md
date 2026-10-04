@@ -6,9 +6,9 @@ Mueve el joystick **a la izquierda o a la derecha** para cambiar de pantalla.
 
 | Pantalla | Muestra |
 |---|---|
+| **CO₂ grande** | Solo el valor, a 85 px de alto, con un marco del color de su nivel. Se lee desde el otro lado de la habitación. Es la pantalla al arrancar |
 | **CO₂** | El valor de CO₂ en grande y su gráfica histórica |
 | **CO₂ + ambiente** | Lo mismo, más temperatura y humedad |
-| **CO₂ grande** | Solo el valor, a 85 px de alto, con un marco del color de su nivel. Se lee desde el otro lado de la habitación |
 
 <div class="photo-todo" markdown>
 **TODO:** fotos de las tres pantallas

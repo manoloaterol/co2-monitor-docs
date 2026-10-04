@@ -112,3 +112,23 @@ If Home Assistant uses another discovery prefix, change **Discovery prefix**
 to match it. If you turn discovery off or change the prefix, the monitor
 removes the old discovery messages when it restarts. Home Assistant then
 deletes the entities instead of leaving them orphaned.
+
+### Dashboard card
+
+The **CO2 Monitor Card** shows the monitor's screens in a Home Assistant
+dashboard: the same layout, typefaces and color scale, with the history chart.
+The three screens rotate like a carousel, and a tap moves to the next one.
+
+<div class="photo-todo" markdown>
+**TODO:** screenshot of the card
+</div>
+
+1. In HACS, open the menu (⋮), choose **Custom repositories** and add
+   **TODO: card repository URL** with the type **Dashboard**.
+2. Find **CO2 Monitor Card** in HACS, download it and reload the browser.
+3. Edit a dashboard, choose **Add card** and search for **CO2 Monitor**.
+
+The card picks your monitor and its sensors on its own. Set **Seconds per
+bar** to the value on the monitor's web page, so the card draws the same chart
+as the display. The card's page explains every option and how to install it
+without HACS.
