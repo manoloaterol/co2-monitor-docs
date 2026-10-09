@@ -1,7 +1,8 @@
 # MQTT & Home Assistant
 
 The monitor works with any MQTT broker and any MQTT client. Home Assistant is
-one more client, not a requirement.
+one more client, not a requirement: openHAB and Domoticz also find the
+monitor on their own, see [Other systems](integrations.md).
 
 ## Topics
 

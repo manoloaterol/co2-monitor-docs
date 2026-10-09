@@ -1,7 +1,8 @@
 # MQTT y Home Assistant
 
 El medidor funciona con cualquier broker y cualquier cliente MQTT. Home
-Assistant es un cliente más, no un requisito.
+Assistant es un cliente más, no un requisito: openHAB y Domoticz también
+encuentran el medidor solos, ver [Otros sistemas domóticos](integrations.md).
 
 ## Topics
 
