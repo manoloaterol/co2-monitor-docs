@@ -2,8 +2,8 @@
 
 Besides Home Assistant, several home automation systems understand the
 monitor's auto-discovery messages and set it up on their own. They only need
-to reach the same MQTT broker. Others, like Node-RED, read the monitor's
-topics directly.
+to reach the same MQTT broker. Others, like Node-RED and ioBroker, read
+the monitor's topics directly.
 
 | System | Tested version | Finds the monitor on its own | Notes |
 |---|---|---|---|
@@ -11,6 +11,7 @@ topics directly.
 | openHAB | 5.2 | Yes, in the Inbox | Needs two add-ons; set the units of the items |
 | Domoticz | 2026.4 | Yes | Temperature and humidity become a single device |
 | Node-RED | 5.0 | No: it reads the topics | Example flow to import below |
+| ioBroker | js-controller 7.2, MQTT adapter 6.1 | No: it reads the topics | One state per topic |
 
 In every case, leave **Home Assistant auto-discovery** ticked on the monitor's
 web page, even if you do not use Home Assistant: these systems read the same
@@ -145,3 +146,40 @@ relay or whatever fits your setup.
 
 The `+` matches any monitor, so one flow serves several of them; `msg.topic`
 tells them apart, for example `co2monitor/a64102/state`.
+
+## ioBroker
+
+ioBroker reads the monitor's topics with the **MQTT Broker/Client** adapter,
+used as a client of your broker. It does not read auto-discovery: it creates
+one state per topic.
+
+1. In **Adapters**, find **MQTT Broker/Client** and add an instance.
+2. In the instance settings, tab **Connection**: choose the client type, and
+   enter the broker address, port, user and password.
+3. Tab **Client settings**: in **Subscribe patterns**, replace the default
+   with `co2monitor/#`, or with your **Topic base** followed by `/#`.
+4. Tab **MQTT Settings**: clear **Mask to publish own states** and leave
+   **Publish own states on connect** unticked. The adapter only has to read;
+   otherwise it could publish its own states to the broker.
+5. **Save and close.** The instance turns green when it connects.
+
+!!! warning
+    The password has to be entered in this settings page. ioBroker stores it
+    encrypted, so setting it from the command line with `iobroker set` does
+    not work: the adapter is then refused by the broker.
+
+The states appear under **Objects → mqtt.0 → co2monitor → xxxxxx**:
+
+| State | Content |
+|---|---|
+| `co2`, `temperature`, `humidity` | The readings, as numbers |
+| `state` | The three readings as JSON text |
+| `status` | `online` / `offline` |
+| `info` | Diagnostics as JSON text |
+
+The states have no unit. If you want one in charts and visualisations, edit
+the object and set it: `ppm`, `°C` and `%`.
+
+When the monitor goes offline, `status` changes to `offline` and the readings
+keep their last value. Use `status` in your scripts to tell a current reading
+from an old one.

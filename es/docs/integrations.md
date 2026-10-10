@@ -2,8 +2,8 @@
 
 Además de Home Assistant, varios sistemas domóticos entienden los mensajes de
 autodescubrimiento del medidor y lo dan de alta solos. Solo necesitan llegar al
-mismo broker MQTT. Otros, como Node-RED, leen directamente los topics del
-medidor.
+mismo broker MQTT. Otros, como Node-RED e ioBroker, leen directamente los
+topics del medidor.
 
 | Sistema | Versión probada | Encuentra el medidor solo | Notas |
 |---|---|---|---|
@@ -11,6 +11,7 @@ medidor.
 | openHAB | 5.2 | Sí, en la bandeja de entrada | Necesita dos complementos; hay que poner las unidades de los items |
 | Domoticz | 2026.4 | Sí | Temperatura y humedad quedan en un solo dispositivo |
 | Node-RED | 5.0 | No: lee los topics | Flujo de ejemplo para importar, más abajo |
+| ioBroker | js-controller 7.2, adaptador MQTT 6.1 | No: lee los topics | Un estado por topic |
 
 En todos los casos, deja marcada **Alta automática en Home Assistant** en la
 página web del medidor, aunque no uses Home Assistant: estos sistemas leen los
@@ -147,3 +148,41 @@ notificación, un relé o lo que encaje en tu instalación.
 
 El `+` encaja con cualquier medidor, así que un solo flujo sirve para varios;
 `msg.topic` los distingue, por ejemplo `co2monitor/a64102/state`.
+
+## ioBroker
+
+ioBroker lee los topics del medidor con el adaptador **MQTT Broker/Client**,
+usado como cliente de tu broker. No lee el autodescubrimiento: crea un estado
+por cada topic.
+
+1. En **Adapters**, busca **MQTT Broker/Client** y añade una instancia.
+2. En los ajustes de la instancia, pestaña **Connection**: elige el tipo
+   cliente y escribe la dirección del broker, el puerto, el usuario y la
+   contraseña.
+3. Pestaña **Client settings**: en **Subscribe patterns**, cambia el valor por
+   defecto por `co2monitor/#`, o por tu **Topic base** seguido de `/#`.
+4. Pestaña **MQTT Settings**: vacía **Mask to publish own states** y deja sin
+   marcar **Publish own states on connect**. El adaptador solo tiene que leer;
+   si no, podría publicar sus propios estados en el broker.
+5. **Save and close.** La instancia se pone en verde cuando conecta.
+
+!!! warning
+    La contraseña hay que escribirla en esta página de ajustes. ioBroker la
+    guarda cifrada, así que ponerla desde la línea de órdenes con
+    `iobroker set` no funciona: el broker rechaza entonces al adaptador.
+
+Los estados aparecen en **Objects → mqtt.0 → co2monitor → xxxxxx**:
+
+| Estado | Contenido |
+|---|---|
+| `co2`, `temperature`, `humidity` | Las lecturas, como números |
+| `state` | Las tres lecturas como texto JSON |
+| `status` | `online` / `offline` |
+| `info` | Diagnóstico como texto JSON |
+
+Los estados no tienen unidad. Si la quieres en gráficas y visualizaciones,
+edita el objeto y ponla: `ppm`, `°C` y `%`.
+
+Cuando el medidor se desconecta, `status` pasa a `offline` y las lecturas
+conservan su último valor. Usa `status` en tus scripts para distinguir una
+lectura actual de una antigua.
