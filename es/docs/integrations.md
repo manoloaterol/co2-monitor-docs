@@ -12,6 +12,7 @@ topics del medidor.
 | Domoticz | 2026.4 | Sí | Temperatura y humedad quedan en un solo dispositivo |
 | Node-RED | 5.0 | No: lee los topics | Flujo de ejemplo para importar, más abajo |
 | ioBroker | js-controller 7.2, adaptador MQTT 6.1 | No: lee los topics | Un estado por topic |
+| InfluxDB + Grafana | Telegraf 1.40, InfluxDB 2.9, Grafana 13.2 | No: Telegraf lee los topics | Panel listo para importar |
 
 En todos los casos, deja marcada **Alta automática en Home Assistant** en la
 página web del medidor, aunque no uses Home Assistant: estos sistemas leen los
@@ -186,3 +187,62 @@ edita el objeto y ponla: `ppm`, `°C` y `%`.
 Cuando el medidor se desconecta, `status` pasa a `offline` y las lecturas
 conservan su último valor. Usa `status` en tus scripts para distinguir una
 lectura actual de una antigua.
+
+## InfluxDB y Grafana
+
+Para guardar las lecturas durante meses y verlas en gráficas, la receta
+habitual es **Telegraf**, que las lee del broker, **InfluxDB**, que las guarda,
+y **Grafana**, que las dibuja.
+
+<div class="photo-todo" markdown>
+**TODO:** captura del panel de Grafana
+</div>
+
+1. En InfluxDB 2, crea un bucket llamado `co2` y un token de API que pueda
+   escribir en él (para Telegraf) y leerlo (para Grafana). Elige la retención
+   del bucket: una lectura por minuto son unos 500.000 puntos al año por
+   medidor, que InfluxDB maneja sin problema.
+2. Añade esto a la configuración de Telegraf, con tu broker, usuario,
+   contraseña, dirección de InfluxDB, organización y token:
+
+    ```toml
+    [[inputs.mqtt_consumer]]
+      servers = ["tcp://192.168.1.10:1883"]
+      topics = ["co2monitor/+/state"]
+      username = "user"
+      password = "password"
+      data_format = "json"
+      name_override = "co2monitor"
+      tagexclude = ["topic"]
+
+      [[inputs.mqtt_consumer.topic_parsing]]
+        topic = "co2monitor/+/state"
+        tags = "_/device/_"
+
+    [[outputs.influxdb_v2]]
+      urls = ["http://192.168.1.10:8086"]
+      token = "TOKEN"
+      organization = "home"
+      bucket = "co2"
+    ```
+
+    Telegraf guarda un punto por cada mensaje de `<base>/state`, con los
+    campos `co2`, `temperature` y `humidity`, en la medida `co2monitor`. El
+    código del medidor pasa a ser la etiqueta `device`, así que varios
+    medidores comparten el bucket y se siguen distinguiendo.
+
+3. En Grafana, añade una fuente de datos **InfluxDB** con el lenguaje de
+   consulta **Flux**, la dirección de InfluxDB, la organización, el token y el
+   bucket por defecto `co2`.
+4. Descarga el [panel](assets/grafana-co2-monitor.json) e impórtalo desde
+   **Dashboards → New → Import**, eligiendo esa fuente de datos.
+
+El panel muestra un medidor de CO₂ con la escala de colores del monitor, la
+temperatura y la humedad actuales, y una gráfica de cada una. Cada medidor es
+una línea, con su código como nombre.
+
+!!! note "Un topic base propio"
+    La configuración de arriba usa el topic base por defecto,
+    `co2monitor/xxxxxx`, para sacar el código del medidor. Si cambiaste el
+    **Topic base**, ponlo en `topics` y en `topic_parsing`, y haz que la
+    etiqueta `device` apunte al nivel que distingue a tus medidores.
