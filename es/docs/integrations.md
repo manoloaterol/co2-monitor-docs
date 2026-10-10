@@ -94,8 +94,17 @@ topics del medidor. El más cómodo es `<base>/state`, que lleva las tres
 lecturas en un solo mensaje JSON, junto con `<base>/status` para saber si el
 medidor está conectado.
 
-El ejemplo de abajo hace justo eso, y avisa cuando el CO₂ pasa de 1000 ppm y
-cuando vuelve a bajar. Impórtalo desde el menú (☰) → **Import** y después:
+El ejemplo de abajo hace justo eso. Muestra las lecturas en un panel y avisa
+cuando el CO₂ pasa de 1000 ppm y cuando vuelve a bajar.
+
+<div class="photo-todo" markdown>
+**TODO:** captura del panel de Node-RED
+</div>
+
+El panel es **FlowFuse Dashboard** (Dashboard 2.0). Instálalo antes desde el
+menú (☰) → **Manage palette** → **Install**, buscando
+`@flowfuse/node-red-dashboard`. Después importa el flujo desde el menú (☰) →
+**Import** y:
 
 1. Abre el nodo **Broker** y pon la dirección de tu broker, y el usuario y la
    contraseña en la pestaña **Security**.
@@ -104,8 +113,12 @@ cuando vuelve a bajar. Impórtalo desde el menú (☰) → **Import** y después
    defecto.
 3. Pulsa **Deploy**.
 
-Las lecturas y el estado se ven en la barra lateral de depuración y debajo de
-los nodos. Para hacer algo con el aviso, cambia el nodo **Ventilate** por una
+Abre `http://<node-red>:1880/dashboard` para ver un medidor de aguja con la
+escala de colores del monitor, la temperatura, la humedad, el estado y una
+gráfica de las últimas seis horas. La gráfica se guarda en la memoria de
+Node-RED, así que vuelve a empezar vacía cuando Node-RED se reinicia. Las
+lecturas y el estado se ven también en la barra lateral de depuración y debajo
+de los nodos. Para hacer algo con el aviso, cambia el nodo **Ventilate** por una
 notificación, un relé o lo que encaje en tu instalación.
 
 ??? example "Flujo de ejemplo"
@@ -113,12 +126,22 @@ notificación, un relé o lo que encaje en tu instalación.
     [
       {"id": "co2tab", "type": "tab", "label": "CO2 monitor"},
       {"id": "co2broker", "type": "mqtt-broker", "name": "Broker", "broker": "192.168.1.10", "port": "1883", "clientid": "", "autoConnect": true, "usetls": false, "protocolVersion": "4", "keepalive": "60", "cleansession": true},
-      {"id": "co2state", "type": "mqtt in", "z": "co2tab", "name": "Readings", "topic": "co2monitor/+/state", "qos": "0", "datatype": "json", "broker": "co2broker", "nl": false, "rap": true, "rh": 0, "inputs": 0, "x": 120, "y": 80, "wires": [["co2debug", "co2high"]]},
-      {"id": "co2status", "type": "mqtt in", "z": "co2tab", "name": "Online / offline", "topic": "co2monitor/+/status", "qos": "1", "datatype": "utf8", "broker": "co2broker", "nl": false, "rap": true, "rh": 0, "inputs": 0, "x": 130, "y": 200, "wires": [["co2debugstatus"]]},
+      {"id": "co2state", "type": "mqtt in", "z": "co2tab", "name": "Readings", "topic": "co2monitor/+/state", "qos": "0", "datatype": "json", "broker": "co2broker", "nl": false, "rap": true, "rh": 0, "inputs": 0, "x": 120, "y": 80, "wires": [["co2debug", "co2high", "co2split"]]},
+      {"id": "co2status", "type": "mqtt in", "z": "co2tab", "name": "Online / offline", "topic": "co2monitor/+/status", "qos": "1", "datatype": "utf8", "broker": "co2broker", "nl": false, "rap": true, "rh": 0, "inputs": 0, "x": 130, "y": 200, "wires": [["co2debugstatus", "co2online"]]},
       {"id": "co2high", "type": "function", "z": "co2tab", "name": "Above 1000 ppm?", "func": "// Warn only when CO2 crosses the threshold, not on every reading\nconst high = msg.payload.co2 >= 1000;\nconst key = \"high_\" + msg.topic;\nif (context.get(key) === high) return null;\ncontext.set(key, high);\nmsg.payload = `CO2 ${msg.payload.co2} ppm: ` + (high ? \"ventilate\" : \"back to normal\");\nreturn msg;", "outputs": 1, "x": 360, "y": 140, "wires": [["co2alert"]]},
       {"id": "co2alert", "type": "debug", "z": "co2tab", "name": "Ventilate", "active": true, "tosidebar": true, "console": false, "tostatus": false, "complete": "payload", "targetType": "msg", "x": 580, "y": 140, "wires": []},
       {"id": "co2debug", "type": "debug", "z": "co2tab", "name": "Reading", "active": true, "tosidebar": true, "console": false, "tostatus": true, "complete": "payload", "targetType": "msg", "statusVal": "payload.co2", "statusType": "msg", "x": 340, "y": 80, "wires": []},
-      {"id": "co2debugstatus", "type": "debug", "z": "co2tab", "name": "Status", "active": true, "tosidebar": true, "console": false, "tostatus": true, "complete": "payload", "targetType": "msg", "statusVal": "payload", "statusType": "msg", "x": 340, "y": 200, "wires": []}
+      {"id": "co2debugstatus", "type": "debug", "z": "co2tab", "name": "Status", "active": true, "tosidebar": true, "console": false, "tostatus": true, "complete": "payload", "targetType": "msg", "statusVal": "payload", "statusType": "msg", "x": 340, "y": 200, "wires": []},
+      {"id": "co2uibase", "type": "ui-base", "name": "CO2 monitor", "path": "/dashboard", "appIcon": "", "includeClientData": true, "acceptsClientConfig": ["ui-notification", "ui-control"], "showPathInSidebar": false, "headerContent": "page", "navigationStyle": "default", "titleBarStyle": "default", "showReconnectNotification": true, "notificationDisplayTime": 1, "showDisconnectNotification": true, "allowInstall": false},
+      {"id": "co2uitheme", "type": "ui-theme", "name": "Default", "colors": {"surface": "#fcfcfd", "primary": "#0d74ce", "bgPage": "#f9f9fb", "groupBg": "#ffffff", "groupOutline": "#d9d9e0"}, "sizes": {"density": "default", "pagePadding": "12px", "groupGap": "12px", "groupBorderRadius": "4px", "widgetGap": "12px"}},
+      {"id": "co2uipage", "type": "ui-page", "name": "CO2", "ui": "co2uibase", "path": "/co2", "icon": "molecule-co2", "layout": "grid", "theme": "co2uitheme", "breakpoints": [{"name": "Default", "px": "0", "cols": "3"}, {"name": "Tablet", "px": "576", "cols": "6"}, {"name": "Small Desktop", "px": "768", "cols": "9"}, {"name": "Desktop", "px": "1024", "cols": "12"}], "order": 1, "className": "", "visible": "true", "disabled": "false"},
+      {"id": "co2uigroup", "type": "ui-group", "name": "CO2 monitor", "page": "co2uipage", "width": "6", "height": "1", "order": 1, "showTitle": true, "className": "", "visible": "true", "disabled": "false", "groupType": "default"},
+      {"id": "co2split", "type": "function", "z": "co2tab", "name": "Split readings", "func": "// One output per widget: CO2, temperature and humidity\nconst s = msg.payload;\nreturn [\n    { topic: \"CO2\", payload: s.co2 },\n    { payload: `${s.temperature} °C` },\n    { payload: `${s.humidity} %` },\n];", "outputs": 3, "x": 360, "y": 280, "wires": [["co2gauge", "co2chart"], ["co2temp"], ["co2hum"]]},
+      {"id": "co2gauge", "type": "ui-gauge", "z": "co2tab", "name": "CO2", "group": "co2uigroup", "order": 1, "width": "6", "height": "4", "gtype": "gauge-half", "gstyle": "needle", "title": "CO₂", "alwaysShowTitle": false, "floatingTitlePosition": "top-left", "units": "ppm", "icon": "", "prefix": "", "suffix": "", "value": "payload", "valueType": "msg", "segments": [{"from": "400", "color": "#76b043"}, {"from": "1000", "color": "#f2d02e"}, {"from": "1700", "color": "#e07b26"}, {"from": "2500", "color": "#9e2b25"}], "min": "400", "max": "3000", "sizeThickness": 16, "sizeGap": 4, "sizeKeyThickness": 8, "styleRounded": true, "styleGlow": false, "className": "", "x": 590, "y": 240, "wires": []},
+      {"id": "co2temp", "type": "ui-text", "z": "co2tab", "name": "", "group": "co2uigroup", "order": 2, "width": "3", "height": "1", "label": "Temperature", "format": "{{msg.payload}}", "layout": "col-center", "style": false, "font": "", "fontSize": 16, "color": "#717171", "wrapText": false, "className": "", "value": "payload", "valueType": "msg", "x": 600, "y": 280, "wires": []},
+      {"id": "co2hum", "type": "ui-text", "z": "co2tab", "name": "", "group": "co2uigroup", "order": 3, "width": "3", "height": "1", "label": "Humidity", "format": "{{msg.payload}}", "layout": "col-center", "style": false, "font": "", "fontSize": 16, "color": "#717171", "wrapText": false, "className": "", "value": "payload", "valueType": "msg", "x": 590, "y": 320, "wires": []},
+      {"id": "co2chart", "type": "ui-chart", "z": "co2tab", "name": "", "group": "co2uigroup", "order": 4, "width": "6", "height": "5", "label": "Last 6 hours", "chartType": "line", "category": "topic", "categoryType": "msg", "xAxisLabel": "", "xAxisProperty": "", "xAxisPropertyType": "timestamp", "xAxisType": "time", "xAxisFormat": "", "xAxisFormatType": "auto", "yAxisLabel": "ppm", "yAxisProperty": "payload", "yAxisPropertyType": "msg", "ymin": "400", "ymax": "", "action": "append", "stackSeries": false, "pointShape": "false", "pointRadius": 4, "showLegend": false, "removeOlder": "6", "removeOlderUnit": "3600", "removeOlderPoints": "", "colors": ["#0095ff"], "textColor": ["#666666"], "textColorDefault": true, "gridColor": ["#e5e5e5"], "gridColorDefault": true, "className": "", "interpolation": "linear", "x": 590, "y": 360, "wires": []},
+      {"id": "co2online", "type": "ui-text", "z": "co2tab", "name": "", "group": "co2uigroup", "order": 5, "width": "6", "height": "1", "label": "Status", "format": "{{msg.payload}}", "layout": "row-spread", "style": false, "font": "", "fontSize": 14, "color": "#717171", "wrapText": false, "className": "", "value": "payload", "valueType": "msg", "x": 590, "y": 400, "wires": []}
     ]
     ```
 
