@@ -2,13 +2,15 @@
 
 Besides Home Assistant, several home automation systems understand the
 monitor's auto-discovery messages and set it up on their own. They only need
-to reach the same MQTT broker.
+to reach the same MQTT broker. Others, like Node-RED, read the monitor's
+topics directly.
 
 | System | Tested version | Finds the monitor on its own | Notes |
 |---|---|---|---|
 | Home Assistant | 2026.9 | Yes | See [MQTT & Home Assistant](mqtt.md#home-assistant) |
 | openHAB | 5.2 | Yes, in the Inbox | Needs two add-ons; set the units of the items |
 | Domoticz | 2026.4 | Yes | Temperature and humidity become a single device |
+| Node-RED | 5.0 | No: it reads the topics | Example flow to import below |
 
 In every case, leave **Home Assistant auto-discovery** ticked on the monitor's
 web page, even if you do not use Home Assistant: these systems read the same
@@ -83,3 +85,40 @@ Domoticz does not use the monitor's `offline` status. When the monitor goes
 offline, the devices keep the last value until the **Sensor Timeout** in
 Domoticz's settings expires (60 minutes by default), and then they show a
 timeout.
+
+## Node-RED
+
+Node-RED does not read auto-discovery: a flow subscribes to the monitor's
+topics directly. The handiest one is `<base>/state`, which carries the three
+readings in a single JSON message, plus `<base>/status` to know whether the
+monitor is online.
+
+The example below does just that, and warns when CO₂ goes above 1000 ppm and
+when it comes back down. Import it from the menu (☰) → **Import**, then:
+
+1. Open the **Broker** node and enter your broker address, and the user and
+   password in the **Security** tab.
+2. If you changed the **Topic base** on the monitor, use it in the two MQTT
+   nodes. `co2monitor/+/…` matches every monitor with the default topic base.
+3. Press **Deploy**.
+
+The readings and the status show in the debug sidebar and under the nodes. To
+act on the warning, replace the **Ventilate** node with a notification, a
+relay or whatever fits your setup.
+
+??? example "Example flow"
+    ```json
+    [
+      {"id": "co2tab", "type": "tab", "label": "CO2 monitor"},
+      {"id": "co2broker", "type": "mqtt-broker", "name": "Broker", "broker": "192.168.1.10", "port": "1883", "clientid": "", "autoConnect": true, "usetls": false, "protocolVersion": "4", "keepalive": "60", "cleansession": true},
+      {"id": "co2state", "type": "mqtt in", "z": "co2tab", "name": "Readings", "topic": "co2monitor/+/state", "qos": "0", "datatype": "json", "broker": "co2broker", "nl": false, "rap": true, "rh": 0, "inputs": 0, "x": 120, "y": 80, "wires": [["co2debug", "co2high"]]},
+      {"id": "co2status", "type": "mqtt in", "z": "co2tab", "name": "Online / offline", "topic": "co2monitor/+/status", "qos": "1", "datatype": "utf8", "broker": "co2broker", "nl": false, "rap": true, "rh": 0, "inputs": 0, "x": 130, "y": 200, "wires": [["co2debugstatus"]]},
+      {"id": "co2high", "type": "function", "z": "co2tab", "name": "Above 1000 ppm?", "func": "// Warn only when CO2 crosses the threshold, not on every reading\nconst high = msg.payload.co2 >= 1000;\nconst key = \"high_\" + msg.topic;\nif (context.get(key) === high) return null;\ncontext.set(key, high);\nmsg.payload = `CO2 ${msg.payload.co2} ppm: ` + (high ? \"ventilate\" : \"back to normal\");\nreturn msg;", "outputs": 1, "x": 360, "y": 140, "wires": [["co2alert"]]},
+      {"id": "co2alert", "type": "debug", "z": "co2tab", "name": "Ventilate", "active": true, "tosidebar": true, "console": false, "tostatus": false, "complete": "payload", "targetType": "msg", "x": 580, "y": 140, "wires": []},
+      {"id": "co2debug", "type": "debug", "z": "co2tab", "name": "Reading", "active": true, "tosidebar": true, "console": false, "tostatus": true, "complete": "payload", "targetType": "msg", "statusVal": "payload.co2", "statusType": "msg", "x": 340, "y": 80, "wires": []},
+      {"id": "co2debugstatus", "type": "debug", "z": "co2tab", "name": "Status", "active": true, "tosidebar": true, "console": false, "tostatus": true, "complete": "payload", "targetType": "msg", "statusVal": "payload", "statusType": "msg", "x": 340, "y": 200, "wires": []}
+    ]
+    ```
+
+The `+` matches any monitor, so one flow serves several of them; `msg.topic`
+tells them apart, for example `co2monitor/a64102/state`.
