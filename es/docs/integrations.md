@@ -2,8 +2,8 @@
 
 Además de Home Assistant, varios sistemas domóticos entienden los mensajes de
 autodescubrimiento del medidor y lo dan de alta solos. Solo necesitan llegar al
-mismo broker MQTT. Otros, como Node-RED e ioBroker, leen directamente los
-topics del medidor.
+mismo broker MQTT. Otros, como Node-RED, ioBroker o ThingsBoard, leen
+directamente los topics del medidor.
 
 | Sistema | Versión probada | Encuentra el medidor solo | Notas |
 |---|---|---|---|
@@ -13,6 +13,7 @@ topics del medidor.
 | Node-RED | 5.0 | No: lee los topics | Flujo de ejemplo para importar, más abajo |
 | ioBroker | js-controller 7.2, adaptador MQTT 6.1 | No: lee los topics | Un estado por topic |
 | InfluxDB + Grafana | Telegraf 1.40, InfluxDB 2.9, Grafana 13.2 | No: Telegraf lee los topics | Panel listo para importar |
+| ThingsBoard | 4.3 LTS, IoT Gateway 3.8 | Sí, a través del gateway | Panel listo para importar |
 
 En todos los casos, deja marcada **Alta automática en Home Assistant** en la
 página web del medidor, aunque no uses Home Assistant: estos sistemas leen los
@@ -246,3 +247,167 @@ una línea, con su código como nombre.
     `co2monitor/xxxxxx`, para sacar el código del medidor. Si cambiaste el
     **Topic base**, ponlo en `topics` y en `topic_parsing`, y haz que la
     etiqueta `device` apunte al nivel que distingue a tus medidores.
+
+## ThingsBoard
+
+ThingsBoard no lee el autodescubrimiento ni se suscribe a un broker ajeno: los
+dispositivos se conectan a él. El puente es el **ThingsBoard IoT Gateway**, que
+se suscribe a tu broker, lee los topics del medidor y da de alta cada medidor
+como un dispositivo de ThingsBoard.
+
+!!! warning "Versión de ThingsBoard"
+    Desde la 4.4, ThingsBoard Community Edition se distribuye con licencia
+    BUSL 1.1 y una instalación nueva no deja entrar hasta activarla con una
+    cuenta en su portal de licencias, que es gratuita. La rama 4.3 LTS, con la
+    que se hizo la prueba, no lo pide. El medidor funciona igual con las dos.
+
+1. En ThingsBoard, ve a **Entities → Gateways** y añade un gateway. Arráncalo
+   con la orden de Docker que te propone ThingsBoard, que ya lleva su token de
+   acceso. El gateway debe poder llegar a tu broker.
+2. En el gateway, añade un conector de tipo **MQTT** y pega en su modo
+   avanzado esta configuración, con la dirección de tu broker, el usuario y la
+   contraseña:
+
+    ??? example "Configuración del conector"
+        ```json
+        {
+          "broker": {
+            "host": "192.168.1.10",
+            "port": 1883,
+            "clientId": "tb-gateway-co2",
+            "version": 5,
+            "cleanSession": true,
+            "cleanStart": true,
+            "sessionExpiryInterval": 0,
+            "security": {
+              "type": "basic",
+              "username": "user",
+              "password": "password"
+            }
+          },
+          "mapping": [
+            {
+              "topicFilter": "co2monitor/+/state",
+              "subscriptionQos": 0,
+              "converter": {
+                "type": "json",
+                "deviceInfo": {
+                  "deviceNameExpressionSource": "topic",
+                  "deviceNameExpression": "^co2monitor/[^/]+",
+                  "deviceProfileExpressionSource": "constant",
+                  "deviceProfileExpression": "CO2 monitor"
+                },
+                "attributes": [],
+                "timeseries": [
+                  {
+                    "type": "integer",
+                    "key": "co2",
+                    "value": "${co2}"
+                  },
+                  {
+                    "type": "double",
+                    "key": "temperature",
+                    "value": "${temperature}"
+                  },
+                  {
+                    "type": "integer",
+                    "key": "humidity",
+                    "value": "${humidity}"
+                  }
+                ]
+              }
+            },
+            {
+              "topicFilter": "co2monitor/+/info",
+              "subscriptionQos": 0,
+              "converter": {
+                "type": "json",
+                "deviceInfo": {
+                  "deviceNameExpressionSource": "topic",
+                  "deviceNameExpression": "^co2monitor/[^/]+",
+                  "deviceProfileExpressionSource": "constant",
+                  "deviceProfileExpression": "CO2 monitor"
+                },
+                "timeseries": [
+                  {
+                    "type": "integer",
+                    "key": "rssi",
+                    "value": "${rssi}"
+                  }
+                ],
+                "attributes": [
+                  {
+                    "type": "string",
+                    "key": "fw",
+                    "value": "${fw}"
+                  },
+                  {
+                    "type": "string",
+                    "key": "hw",
+                    "value": "${hw}"
+                  },
+                  {
+                    "type": "string",
+                    "key": "sensor_fw",
+                    "value": "${sensor_fw}"
+                  },
+                  {
+                    "type": "string",
+                    "key": "ip",
+                    "value": "${ip}"
+                  },
+                  {
+                    "type": "string",
+                    "key": "mac",
+                    "value": "${mac}"
+                  },
+                  {
+                    "type": "string",
+                    "key": "hostname",
+                    "value": "${hostname}"
+                  },
+                  {
+                    "type": "integer",
+                    "key": "uptime_s",
+                    "value": "${uptime_s}"
+                  },
+                  {
+                    "type": "string",
+                    "key": "reset",
+                    "value": "${reset}"
+                  }
+                ]
+              }
+            }
+          ],
+          "requestsMapping": {}
+        }
+        ```
+
+3. Guarda. En **Entities → Devices** aparece cada medidor como
+   `co2monitor/xxxxxx`, con el perfil `CO2 monitor`, en cuanto publique.
+4. Descarga el [panel](assets/thingsboard-co2-monitor.json) e impórtalo desde
+   **Dashboards → + → Import dashboard**.
+
+Cada medidor recibe como telemetría `co2`, `temperature`, `humidity` y `rssi`,
+y como atributos lo que publica en `<base>/info`: versiones, IP, nombre de
+red, tiempo encendido y motivo del último reinicio.
+
+El panel muestra el CO₂ con los colores del monitor, la temperatura y la
+humedad actuales, la ficha del medidor y una gráfica de cada lectura. Con
+varios medidores, elige cuál ver en el selector de la barra superior.
+
+<div class="photo-todo" markdown>
+**TODO:** captura del panel de ThingsBoard
+</div>
+
+!!! note "Conectado o desconectado"
+    El gateway no puede asignar `<base>/status` a un medidor, porque ese
+    mensaje es texto plano y el nombre del medidor solo está en el topic.
+    ThingsBoard marca el dispositivo como inactivo cuando deja de recibir
+    lecturas, al cabo de 10 minutos por defecto.
+
+!!! note "Un topic base propio"
+    La configuración usa el topic base por defecto, `co2monitor/xxxxxx`. Si
+    cambiaste el **Topic base**, ponlo en los dos `topicFilter` y en los dos
+    `deviceNameExpression`, que es una expresión regular sobre el topic.
