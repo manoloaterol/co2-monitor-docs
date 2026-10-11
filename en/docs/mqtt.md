@@ -1,8 +1,9 @@
 # MQTT & Home Assistant
 
-The monitor works with any MQTT broker and any MQTT client. Home Assistant is
-one more client, not a requirement: openHAB and Domoticz also find the
-monitor on their own, see [Other systems](integrations.md).
+The monitor speaks standard MQTT, so it should work with any MQTT broker and
+any MQTT client. Home Assistant is one more client, not a requirement:
+openHAB and Domoticz also find the monitor on their own, see
+[Integrations](integrations.md) and [Compatibility](compatibility.md).
 
 ## Topics
 
@@ -66,8 +67,10 @@ The broker can be `mqtt://` (usually port 1883) or `mqtts://` (usually port
 8883). With `mqtts://` the broker's certificate **is always verified**:
 
 - **With the CA field empty**, it is checked against the common public
-  authorities built into the firmware. This is right for cloud brokers (HiveMQ
-  Cloud, EMQX Cloud…) and for any broker with a Let's Encrypt certificate.
+  authorities built into the firmware. That is how it was tested with Azure
+  Event Grid. It should also do for other cloud brokers, such as HiveMQ Cloud
+  or EMQX Cloud, and for any broker with a Let's Encrypt certificate, although
+  that has not been validated.
 - **If your broker uses its own CA**, such as a Mosquitto with self-signed
   certificates, paste its `ca.crt` in PEM into the CA field.
 
@@ -78,8 +81,10 @@ certificate is for `broker.example.com`, connecting by IP address or by a
 ### Client certificates
 
 Some brokers identify the device by a **client certificate** instead of a
-password (mutual TLS), such as Azure Event Grid or AWS IoT. For them, paste
-the certificate and its private key in PEM on the web page.
+password (mutual TLS), such as Azure Event Grid (see the
+[guide](integrations.md#azure-event-grid)) or AWS IoT Core, which should work
+but has not been validated. For them, paste the certificate and its private
+key in PEM on the web page.
 
 - The key cannot be protected with a passphrase.
 - The key is never shown again. Leave the field blank to keep the stored one.

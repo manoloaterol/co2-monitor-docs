@@ -1,4 +1,4 @@
-# Otros sistemas domóticos
+# Integraciones
 
 Además de Home Assistant, varios sistemas domóticos entienden los mensajes de
 autodescubrimiento del medidor y lo dan de alta solos. Solo necesitan llegar al
@@ -22,6 +22,10 @@ en ellos.
 
 Cualquier otro cliente MQTT puede leer directamente los topics planos. Están
 descritos en [MQTT y Home Assistant](mqtt.md#topics).
+
+Al final de la página está cómo publicar directamente en
+[Azure Event Grid](#azure-event-grid). El resumen de lo probado y de lo que
+debería funcionar está en [Compatibilidad](compatibility.md).
 
 ## openHAB
 
@@ -411,3 +415,92 @@ varios medidores, elige cuál ver en el selector de la barra superior.
     La configuración usa el topic base por defecto, `co2monitor/xxxxxx`. Si
     cambiaste el **Topic base**, ponlo en los dos `topicFilter` y en los dos
     `deviceNameExpression`, que es una expresión regular sobre el topic.
+
+## Azure Event Grid
+
+El broker MQTT de Azure Event Grid no admite usuario y contraseña: cada
+aparato se identifica con un **certificado de cliente**. El medidor lo admite,
+así que puede publicar directamente en Azure, sin un broker intermedio.
+
+Tienen que coincidir tres cosas:
+
+| En Azure | En el medidor |
+|---|---|
+| *Client authentication name* | **Usuario** |
+| *Thumbprint* del cliente | Huella del certificado que pegas en la página web |
+| Plantilla del *topic space* | **Topic base** |
+
+### 1. Crear el certificado
+
+Con validación por huella vale un certificado autofirmado, sin CA. Genéralo
+con OpenSSL, con clave EC P-256 y sin contraseña:
+
+```sh
+openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:prime256v1 -nodes \
+  -keyout co2-monitor.key -out co2-monitor.crt -days 365 \
+  -subj "/CN=co2-monitor-xxxxxx"
+
+openssl x509 -in co2-monitor.crt -noout -fingerprint -sha256 | cut -d= -f2 | tr -d ':'
+```
+
+La última orden da la huella SHA-256 en el formato que pide Azure.
+
+- **EC P-256** hace el saludo TLS bastante más rápido que RSA en el medidor.
+- **`-nodes`** deja la clave sin contraseña. El medidor no admite claves
+  cifradas.
+- **El certificado caduca** a los 365 días. Antes de esa fecha, genera otro,
+  cambia la huella en Azure y pega el nuevo en el medidor.
+
+### 2. Configurar Event Grid
+
+En el *namespace* de Event Grid, en el portal de Azure:
+
+1. **Configuration:** marca **Enable MQTT broker** y guarda. En **Overview**
+   aparece el nombre del broker, con la forma
+   `<namespace>.<región>-1.ts.eventgrid.azure.net`.
+2. **Clients → + Client:**
+    - **Client authentication name:** por ejemplo `co2-monitor-xxxxxx`.
+    - **Client certificate authentication validation scheme:**
+      **Thumbprint Match**.
+    - **Primary thumbprint:** la huella del paso anterior.
+3. **Topic spaces → + Topic space**, con la plantilla `co2monitor/#`. Si
+   cambiaste el **Topic base** del medidor, la plantilla tiene que cubrirlo.
+4. **Permission bindings → + Permission binding:** permiso **Publisher** sobre
+   ese topic space. El grupo `$all` sirve para empezar. En uso real, crea un
+   grupo solo para los medidores.
+
+Para leer los datos desde otro cliente, dale de alta igual y añade un permiso
+**Subscriber** sobre el mismo topic space.
+
+### 3. Configurar el medidor
+
+En la página web del medidor, en **MQTT**:
+
+| Ajuste | Valor |
+|---|---|
+| Broker | `mqtts://<namespace>.<región>-1.ts.eventgrid.azure.net:8883` |
+| Usuario | El *client authentication name* |
+| Contraseña | Vacía |
+| Certificado de la CA | Vacío: la autoridad de Azure va incluida en el firmware |
+| Certificado de cliente | El contenido de `co2-monitor.crt` |
+| Clave privada | El contenido de `co2-monitor.key` |
+| Alta automática en Home Assistant | Desmarcada, salvo que el topic space incluya también `homeassistant/#` |
+
+Guarda. El medidor conecta en unos segundos. En el portal, las **Metrics** del
+namespace muestran las conexiones y los mensajes publicados.
+
+En la prueba, el medidor se mantuvo conectado con sus mensajes retenidos
+(`status` e `info`) y su última voluntad.
+
+!!! note "Si no conecta"
+    - **Rechazo por autorización:** el usuario no coincide con el
+      *client authentication name*, o la huella registrada no es la del
+      certificado que tiene el medidor. Comprueba también el CN del
+      certificado con `openssl x509 -in co2-monitor.crt -noout -subject`.
+    - **Conecta pero no llega nada:** falta el permiso **Publisher**, o el
+      topic base no entra en la plantilla del topic space.
+
+!!! warning
+    La clave privada se guarda en la flash del medidor sin cifrar, como las
+    contraseñas. Si pierdes el control del aparato, deshabilita su cliente en
+    Azure.

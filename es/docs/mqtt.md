@@ -1,8 +1,9 @@
 # MQTT y Home Assistant
 
-El medidor funciona con cualquier broker y cualquier cliente MQTT. Home
-Assistant es un cliente más, no un requisito: openHAB y Domoticz también
-encuentran el medidor solos, ver [Otros sistemas domóticos](integrations.md).
+El medidor habla MQTT estándar, así que debería funcionar con cualquier broker
+y cualquier cliente MQTT. Home Assistant es un cliente más, no un requisito:
+openHAB y Domoticz también encuentran el medidor solos, ver
+[Integraciones](integrations.md) y [Compatibilidad](compatibility.md).
 
 ## Topics
 
@@ -66,9 +67,10 @@ El broker puede ser `mqtt://` (normalmente en el puerto 1883) o `mqtts://`
 se verifica**:
 
 - **Con el campo de la CA vacío**, se comprueba contra las autoridades
-  públicas más comunes, que lleva el firmware. Esto vale para los brokers en
-  la nube (HiveMQ Cloud, EMQX Cloud…) y para cualquier broker con certificado
-  de Let's Encrypt.
+  públicas más comunes, que lleva el firmware. Así se probó con Azure Event
+  Grid. Debería valer también para otros brokers en la nube, como HiveMQ Cloud
+  o EMQX Cloud, y para cualquier broker con certificado de Let's Encrypt,
+  aunque no se ha validado.
 - **Si tu broker usa una CA propia**, como un Mosquitto con certificados
   autofirmados, pega su `ca.crt` en PEM en el campo de la CA.
 
@@ -79,8 +81,10 @@ o por un nombre `.local` falla la verificación.
 ### Certificados de cliente
 
 Algunos brokers identifican al aparato por un **certificado de cliente** en
-lugar de por contraseña (TLS mutuo), como Azure Event Grid o AWS IoT. Para
-ellos, pega en la página web el certificado y su clave privada en PEM.
+lugar de por contraseña (TLS mutuo), como Azure Event Grid (ver la
+[guía](integrations.md#azure-event-grid)) o AWS IoT Core, que debería funcionar
+pero no se ha validado. Para ellos, pega en la página web el certificado y su
+clave privada en PEM.
 
 - La clave no puede estar protegida con contraseña.
 - La clave no se vuelve a mostrar nunca. Deja el campo en blanco para

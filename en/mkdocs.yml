@@ -14,7 +14,8 @@ nav:
   - User guide: user-guide.md
   - Web page & settings: web-page.md
   - MQTT & Home Assistant: mqtt.md
-  - Other systems: integrations.md
+  - Compatibility: compatibility.md
+  - Integrations: integrations.md
   - Calibration: calibration.md
   - Firmware update: firmware-update.md
   - Help: help.md

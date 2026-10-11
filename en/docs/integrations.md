@@ -1,4 +1,4 @@
-# Other home automation systems
+# Integrations
 
 Besides Home Assistant, several home automation systems understand the
 monitor's auto-discovery messages and set it up on their own. They only need
@@ -21,6 +21,10 @@ messages. If you changed the **Discovery prefix**, use the same one in them.
 
 Any other MQTT client can read the plain topics directly. They are described
 in [MQTT & Home Assistant](mqtt.md#topics).
+
+The end of the page shows how to publish straight to
+[Azure Event Grid](#azure-event-grid). What has been tested and what should
+work is summed up in [Compatibility](compatibility.md).
 
 ## openHAB
 
@@ -410,3 +414,91 @@ monitors, pick the one to show in the selector on the top bar.
     changed the **Topic base**, put it in both `topicFilter` entries and both
     `deviceNameExpression` entries, which are regular expressions over the
     topic.
+
+## Azure Event Grid
+
+The Azure Event Grid MQTT broker takes no user and password: each device
+identifies itself with a **client certificate**. The monitor supports that,
+so it can publish straight to Azure, with no broker in between.
+
+Three things must match:
+
+| In Azure | On the monitor |
+|---|---|
+| *Client authentication name* | **User** |
+| Client *thumbprint* | Fingerprint of the certificate you paste on the web page |
+| *Topic space* template | **Topic base** |
+
+### 1. Create the certificate
+
+With thumbprint validation a self-signed certificate will do, with no CA.
+Create it with OpenSSL, with an EC P-256 key and no passphrase:
+
+```sh
+openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:prime256v1 -nodes \
+  -keyout co2-monitor.key -out co2-monitor.crt -days 365 \
+  -subj "/CN=co2-monitor-xxxxxx"
+
+openssl x509 -in co2-monitor.crt -noout -fingerprint -sha256 | cut -d= -f2 | tr -d ':'
+```
+
+The last command prints the SHA-256 fingerprint in the format Azure asks for.
+
+- **EC P-256** makes the TLS handshake much faster than RSA on the monitor.
+- **`-nodes`** leaves the key without a passphrase. The monitor does not take
+  encrypted keys.
+- **The certificate expires** after 365 days. Before that, create another,
+  change the thumbprint in Azure and paste the new one into the monitor.
+
+### 2. Set up Event Grid
+
+In the Event Grid *namespace*, in the Azure portal:
+
+1. **Configuration:** tick **Enable MQTT broker** and save. **Overview** then
+   shows the broker's host name, in the form
+   `<namespace>.<region>-1.ts.eventgrid.azure.net`.
+2. **Clients → + Client:**
+    - **Client authentication name:** for example `co2-monitor-xxxxxx`.
+    - **Client certificate authentication validation scheme:**
+      **Thumbprint Match**.
+    - **Primary thumbprint:** the fingerprint from the previous step.
+3. **Topic spaces → + Topic space**, with the template `co2monitor/#`. If you
+   changed the monitor's **Topic base**, the template must cover it.
+4. **Permission bindings → + Permission binding:** **Publisher** permission
+   on that topic space. The `$all` group is enough to start with. For real
+   use, create a group for the monitors only.
+
+To read the data from another client, register it the same way and add a
+**Subscriber** permission on the same topic space.
+
+### 3. Set up the monitor
+
+On the monitor's web page, under **MQTT**:
+
+| Setting | Value |
+|---|---|
+| Broker | `mqtts://<namespace>.<region>-1.ts.eventgrid.azure.net:8883` |
+| User | The *client authentication name* |
+| Password | Empty |
+| CA certificate | Empty: Azure's authority is built into the firmware |
+| Client certificate | The contents of `co2-monitor.crt` |
+| Private key | The contents of `co2-monitor.key` |
+| Home Assistant auto-discovery | Unticked, unless the topic space also covers `homeassistant/#` |
+
+Save. The monitor connects within a few seconds. In the portal, the
+namespace's **Metrics** show the connections and the published messages.
+
+In the test, the monitor stayed connected with its retained messages
+(`status` and `info`) and its last will.
+
+!!! note "If it does not connect"
+    - **Rejected as not authorised:** the user does not match the
+      *client authentication name*, or the registered thumbprint is not the
+      one of the certificate on the monitor. Check the certificate's CN too,
+      with `openssl x509 -in co2-monitor.crt -noout -subject`.
+    - **Connects but nothing arrives:** the **Publisher** permission is
+      missing, or the topic base is not covered by the topic space template.
+
+!!! warning
+    The private key is stored in the monitor's flash unencrypted, like the
+    passwords. If you lose control of the device, disable its client in Azure.
