@@ -19,6 +19,11 @@ in [Topics](mqtt.md#topics).
 
 ## Home Assistant
 
+An open-source home automation platform that brings devices from hundreds of
+brands together on one dashboard and lets you automate them. It runs on a
+computer in your home, such as a Raspberry Pi or a mini PC, with no need for
+the cloud.
+
 You need Home Assistant with the **MQTT integration** set up and connected
 to a broker, for example the Mosquitto add-on.
 
@@ -63,6 +68,10 @@ more bars than the display, as a longer stretch of history. The card's page
 explains every option and how to install it without HACS.
 
 ## openHAB
+
+An open-source home automation platform that connects devices of different
+brands and protocols and lets you automate them with rules. It runs on your
+own network, with no need for the cloud.
 
 The steps are for the main UI of openHAB 5.
 
@@ -110,6 +119,10 @@ When the monitor goes offline the Thing changes to **OFFLINE**, and back to
 
 ## Domoticz
 
+A lightweight open-source home automation system, made for modest hardware
+such as a Raspberry Pi. It logs sensors and switches, keeps their history and
+lets you write events and scripts.
+
 1. In **Setup → Hardware**, add a hardware of the type **MQTT Auto Discovery
    Client Gateway with LAN interface**.
 2. Enter the broker address and port, and the user and password. Leave
@@ -130,6 +143,10 @@ Domoticz's settings expires (60 minutes by default), and then they show a
 timeout.
 
 ## Node-RED
+
+An open-source tool for visual programming, wiring blocks into a flow from the
+browser. It is widely used to connect devices and services to each other, on
+its own or next to other home automation systems.
 
 Node-RED does not read auto-discovery: a flow subscribes to the monitor's
 topics directly. The handiest one is `<base>/state`, which carries the three
@@ -191,6 +208,10 @@ tells them apart, for example `co2monitor/a64102/state`.
 
 ## ioBroker
 
+An open-source integration and home automation platform. Each integration is
+an adapter, and the data from all of them becomes states that can be shown on
+dashboards and used in automations.
+
 ioBroker reads the monitor's topics with the **MQTT Broker/Client** adapter,
 used as a client of your broker. It does not read auto-discovery: it creates
 one state per topic.
@@ -227,6 +248,10 @@ keep their last value. Use `status` in your scripts to tell a current reading
 from an old one.
 
 ## InfluxDB and Grafana
+
+InfluxDB is a database made for time-stamped measurements, and Grafana a tool
+that draws them on chart dashboards. Telegraf is the agent that carries the
+data into InfluxDB. All three are open source.
 
 To keep the readings for months and chart them, the usual recipe is
 **Telegraf**, which reads them from the broker, **InfluxDB**, which stores
@@ -286,6 +311,10 @@ named after its code.
     `device` tag at the level that tells your monitors apart.
 
 ## ThingsBoard
+
+An IoT platform to collect, process and visualise device data, with
+dashboards, alarms and rules. It has a Community edition that you install on
+your own server, plus commercial and cloud versions.
 
 ThingsBoard neither reads auto-discovery nor subscribes to someone else's
 broker: devices connect to it. The bridge is the **ThingsBoard IoT Gateway**,
@@ -452,6 +481,10 @@ monitors, pick the one to show in the selector on the top bar.
     topic.
 
 ## Azure Event Grid
+
+A Microsoft Azure messaging service, paid per use, that includes an MQTT
+broker in the cloud. It carries the monitor's readings to other Azure
+services, such as databases, functions or data analytics.
 
 The Azure Event Grid MQTT broker takes no user and password: each device
 identifies itself with a **client certificate**. The monitor supports that,

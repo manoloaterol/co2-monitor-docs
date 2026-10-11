@@ -1,9 +1,10 @@
 # CO₂ Monitor
 
 An indoor CO₂ monitor with NDIR technology, a colour IPS display and its own
-web page through an access point. It publishes over MQTT and integrates with
-Home Assistant automatically. It also works as a stand-alone monitor, with no
-need to join any network.
+web page, opened from your network or, with no network, through its own access
+point. It publishes over MQTT and integrates automatically with systems such
+as Home Assistant, openHAB or Domoticz. It also works as a stand-alone
+monitor, with no need to join any network.
 
 <div class="photo-todo" markdown>
 **TODO:** product photo
@@ -16,7 +17,7 @@ need to join any network.
 
 - **Measures CO₂, temperature and humidity** with a Sensirion SCD30. It is a
   real NDIR CO₂ sensor, not an "eCO₂" estimate worked out from other gases.
-- **Shows them on a 1.83" colour display**, with a history chart. The colours
+- **Shows them on a 1.83" colour IPS display**, with a history chart. The colours
   follow published indoor air guidelines. See [Reading the colours](user-guide.md#reading-the-colours).
 - **Publishes over standard MQTT**, with or without TLS. See [MQTT & compatibility](mqtt.md).
 - **Appears in Home Assistant** through MQTT discovery, with no YAML to write.
@@ -35,7 +36,7 @@ New here? Start with [Getting started](getting-started.md).
 | CO₂ range | 400–10,000 ppm |
 | CO₂ accuracy | ±(30 ppm + 3 % of reading) |
 | Also measures | Temperature, relative humidity |
-| Display | 1.83", 240×280, colour |
+| Display | 1.83" IPS, 240×280, colour |
 | Controls | 3-way joystick, blue status LED |
 | Wireless | Wi-Fi 802.11 b/g/n, **2.4 GHz only** |
 | Protocols | MQTT 3.1.1 (TLS 1.2 optional), HTTP, mDNS |

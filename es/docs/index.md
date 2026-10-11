@@ -1,8 +1,9 @@
 # Medidor de CO₂
 
-Un medidor de CO₂ para interiores con tecnología NDIR, pantalla IPS en color
-y página web propia mediante punto de acceso. Publica por MQTT y se integra
-automáticamente con Home Assistant. También funciona como medidor
+Un medidor de CO₂ para interiores con tecnología NDIR, pantalla IPS en color y
+página web propia, que se abre desde tu red o, sin red, desde su propio punto
+de acceso. Publica por MQTT y se integra automáticamente con sistemas como
+Home Assistant, openHAB o Domoticz. También funciona como medidor
 independiente, sin necesidad de conectarse a ninguna red.
 
 <div class="photo-todo" markdown>
@@ -17,7 +18,7 @@ independiente, sin necesidad de conectarse a ninguna red.
 - **Mide CO₂, temperatura y humedad** con un Sensirion SCD30. Es un sensor
   de CO₂ NDIR de verdad, no una estimación "eCO₂" calculada a partir de otros
   gases.
-- **Los muestra en una pantalla en color de 1,83"**, con una gráfica
+- **Los muestra en una pantalla IPS en color de 1,83"**, con una gráfica
   histórica. Los colores siguen guías publicadas de calidad del aire interior.
   Ver [Leer los colores](user-guide.md#leer-los-colores).
 - **Publica por MQTT** estándar, con o sin TLS. Ver [MQTT y compatibilidad](mqtt.md).
@@ -38,7 +39,7 @@ independiente, sin necesidad de conectarse a ninguna red.
 | Rango de CO₂ | 400–10.000 ppm |
 | Exactitud de CO₂ | ±(30 ppm + 3 % de la lectura) |
 | Mide además | Temperatura y humedad relativa |
-| Pantalla | 1,83", 240×280, color |
+| Pantalla | IPS de 1,83", 240×280, color |
 | Controles | Joystick de 3 vías, LED de estado azul |
 | Inalámbrico | Wi-Fi 802.11 b/g/n, **solo 2,4 GHz** |
 | Protocolos | MQTT 3.1.1 (TLS 1.2 opcional), HTTP, mDNS |

@@ -19,6 +19,10 @@ descritos en [Topics](mqtt.md#topics).
 
 ## Home Assistant
 
+Plataforma domótica de código abierto que reúne en un mismo panel dispositivos
+de cientos de marcas y permite automatizarlos. Se instala en un equipo de tu
+casa, como una Raspberry Pi o un mini PC, y funciona sin depender de la nube.
+
 Necesitas Home Assistant con la **integración MQTT** configurada y conectada
 a un broker, por ejemplo el complemento de Mosquitto.
 
@@ -66,6 +70,10 @@ página de la tarjeta explica todas las opciones y cómo instalarla sin HACS.
 
 ## openHAB
 
+Plataforma domótica de código abierto que conecta dispositivos de distintas
+marcas y protocolos y permite automatizarlos con reglas. Funciona en tu propia
+red, sin depender de la nube.
+
 Los pasos son para la interfaz principal de openHAB 5.
 
 1. En **Settings → Add-on Store → Bindings**, instala **MQTT Binding** y
@@ -112,6 +120,10 @@ Cuando el medidor se desconecta, el Thing pasa a **OFFLINE**, y vuelve a
 
 ## Domoticz
 
+Sistema domótico de código abierto y ligero, pensado para equipos modestos
+como una Raspberry Pi. Registra sensores e interruptores, guarda su historial
+y permite crear eventos y scripts.
+
 1. En **Configuración → Hardware**, añade un hardware del tipo **MQTT Auto
    Discovery Client Gateway with LAN interface**.
 2. Escribe la dirección y el puerto del broker, y el usuario y la contraseña.
@@ -132,6 +144,10 @@ desconecta, los dispositivos conservan el último valor hasta que vence el
 60 minutos por defecto, y entonces lo marcan como sin datos.
 
 ## Node-RED
+
+Herramienta de código abierto para programar de forma visual, uniendo bloques
+en un flujo desde el navegador. Se usa mucho para conectar dispositivos y
+servicios entre sí, sola o junto a otros sistemas domóticos.
 
 Node-RED no lee el autodescubrimiento: un flujo se suscribe directamente a los
 topics del medidor. El más cómodo es `<base>/state`, que lleva las tres
@@ -194,6 +210,10 @@ El `+` encaja con cualquier medidor, así que un solo flujo sirve para varios;
 
 ## ioBroker
 
+Plataforma de integración y domótica de código abierto. Cada integración es un
+adaptador, y los datos de todos quedan como estados que se pueden mostrar en
+paneles y usar en automatizaciones.
+
 ioBroker lee los topics del medidor con el adaptador **MQTT Broker/Client**,
 usado como cliente de tu broker. No lee el autodescubrimiento: crea un estado
 por cada topic.
@@ -231,6 +251,10 @@ conservan su último valor. Usa `status` en tus scripts para distinguir una
 lectura actual de una antigua.
 
 ## InfluxDB y Grafana
+
+InfluxDB es una base de datos pensada para mediciones con fecha y hora, y
+Grafana, una herramienta que las dibuja en paneles de gráficas. Telegraf es el
+agente que lleva los datos hasta InfluxDB. Los tres son de código abierto.
 
 Para guardar las lecturas durante meses y verlas en gráficas, la receta
 habitual es **Telegraf**, que las lee del broker, **InfluxDB**, que las guarda,
@@ -290,6 +314,10 @@ una línea, con su código como nombre.
     etiqueta `device` apunte al nivel que distingue a tus medidores.
 
 ## ThingsBoard
+
+Plataforma IoT para recoger, procesar y visualizar datos de dispositivos, con
+paneles, alarmas y reglas. Tiene una edición Community que se instala en tu
+propio servidor, y versiones comerciales y en la nube.
 
 ThingsBoard no lee el autodescubrimiento ni se suscribe a un broker ajeno: los
 dispositivos se conectan a él. El puente es el **ThingsBoard IoT Gateway**, que
@@ -454,6 +482,10 @@ varios medidores, elige cuál ver en el selector de la barra superior.
     `deviceNameExpression`, que es una expresión regular sobre el topic.
 
 ## Azure Event Grid
+
+Servicio de mensajería de Microsoft Azure, de pago por uso, que incluye un
+broker MQTT en la nube. Sirve para llevar las lecturas del medidor a otros
+servicios de Azure, como bases de datos, funciones o análisis de datos.
 
 El broker MQTT de Azure Event Grid no admite usuario y contraseña: cada
 aparato se identifica con un **certificado de cliente**. El medidor lo admite,
