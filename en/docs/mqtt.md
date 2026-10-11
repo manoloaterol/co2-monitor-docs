@@ -1,9 +1,28 @@
-# MQTT & Home Assistant
+# MQTT & compatibility
 
-The monitor speaks standard MQTT, so it should work with any MQTT broker and
-any MQTT client. Home Assistant is one more client, not a requirement:
-openHAB and Domoticz also find the monitor on their own, see
-[Integrations](integrations.md) and [Compatibility](compatibility.md).
+The monitor publishes its readings over standard MQTT, so it should work with
+any MQTT broker and any MQTT client. This page describes what it accepts, its
+topics and its security, and what it has been tested with. The steps for each
+system are in [Integrations](integrations.md).
+
+## What it accepts
+
+| | |
+|---|---|
+| Protocol | MQTT 3.1.1. Brokers with MQTT 5 accept 3.1.1 clients |
+| Role | Publishes only. It subscribes to no topic and takes no commands |
+| Connection | `mqtt://` unencrypted or `mqtts://` with TLS 1.2, on any port |
+| Broker certificate | Always verified: against the common public authorities built into the firmware, or against a CA of your own in PEM |
+| Authentication | User and password, client certificate (mutual TLS), or both |
+| Client identifier | `co2monitor_xxxxxx`, with the device code. It cannot be changed |
+| Topics | Configurable topic base. Each reading on its own topic, and the three together in JSON |
+| QoS | 0 for readings; 1 for the status and for the diagnostics on connecting. Never 2 |
+| Retained messages | Optional for readings. Status and diagnostics are always retained |
+| Last will | `<base>/status` turns `offline` if the monitor drops without notice |
+| Discovery | Home Assistant format, with a configurable prefix. It can be turned off |
+
+**Not supported:** MQTT 5 as its own protocol, MQTT over WebSocket, TLS 1.3,
+passphrase-protected private keys or incoming commands.
 
 ## Topics
 
@@ -96,47 +115,49 @@ key in PEM on the web page.
     The key is stored in the monitor's flash without encryption, the same as
     the Wi-Fi and MQTT passwords.
 
-## Home Assistant
+## Tested
 
-You need Home Assistant with the **MQTT integration** set up and connected
-to a broker, for example the Mosquitto add-on.
+Tests made in October 2026 with the versions shown. Each system has its own
+guide.
 
-1. On the monitor's web page, under **MQTT**, enter the broker address, for
-   example `mqtt://192.168.1.10:1883`, and its user and password.
-2. Leave **Home Assistant auto-discovery** ticked. It is on by default.
-3. Save.
+### Home automation
 
-The monitor appears in Home Assistant as a device with three sensors: CO₂,
-temperature and humidity. It shows as unavailable when it goes offline. Its
-name is the **Name** setting on the web page.
+| System | Version | How |
+|---|---|---|
+| Home Assistant | 2026.9 | Finds it on its own. [Guide](integrations.md#home-assistant) |
+| openHAB | 5.2 | Finds it on its own. [Guide](integrations.md#openhab) |
+| Domoticz | 2026.4 | Finds it on its own. [Guide](integrations.md#domoticz) |
+| Node-RED | 5.0 | Reads the topics. [Guide](integrations.md#node-red) |
+| ioBroker | js-controller 7.2, MQTT adapter 6.1 | Reads the topics. [Guide](integrations.md#iobroker) |
 
-Discovery uses retained messages under `homeassistant/sensor/…/config`,
-which point to the same topics as above. Clients that are not Home Assistant
-simply ignore them. The CO₂ sensor also carries the `chart_bar_s` attribute,
-taken from `info`, so the dashboard card below draws the same chart as the
-display.
+### Data and IoT platforms
 
-If Home Assistant uses another discovery prefix, change **Discovery prefix**
-to match it. If you turn discovery off or change the prefix, the monitor
-removes the old discovery messages when it restarts. Home Assistant then
-deletes the entities instead of leaving them orphaned.
+| System | Version | How |
+|---|---|---|
+| InfluxDB + Grafana | Telegraf 1.40, InfluxDB 2.9, Grafana 13.2 | Telegraf reads the topics. [Guide](integrations.md#influxdb-and-grafana) |
+| ThingsBoard | 4.3 LTS, IoT Gateway 3.8 | The gateway reads the topics. [Guide](integrations.md#thingsboard) |
 
-### Dashboard card
+### Brokers
 
-The **CO2 Monitor Card** shows the monitor's screens in a Home Assistant
-dashboard: the same layout, typefaces and color scale, with the history chart.
-The three screens rotate like a carousel, and a tap moves to the next one.
+| Broker | Connection | Guide |
+|---|---|---|
+| Mosquitto 2 | `mqtt://` with user and password | [Home Assistant](integrations.md#home-assistant) |
+| Azure Event Grid | `mqtts://` with a client certificate | [Guide](integrations.md#azure-event-grid) |
 
-<div class="photo-todo" markdown>
-**TODO:** screenshot of the card
-</div>
+## Should work, but not validated
 
-1. In HACS, open the menu (⋮), choose **Custom repositories** and add
-   **TODO: card repository URL** with the type **Dashboard**.
-2. Find **CO2 Monitor Card** in HACS, download it and reload the browser.
-3. Edit a dashboard, choose **Add card** and search for **CO2 Monitor**.
+These cases use the same features that have been tested, but have not been
+checked with the monitor:
 
-The card picks your monitor and its sensors on its own, and takes the
-seconds per bar from the monitor, so its chart matches the display. It can show
-more bars than the display, as a longer stretch of history. The card's page
-explains every option and how to install it without HACS.
+- **Any other MQTT 3.1.1 or 5 broker** on your network, such as EMQX,
+  HiveMQ CE, NanoMQ or the broker built into other home automation systems.
+- **Cloud brokers with user and password**, such as HiveMQ Cloud or EMQX
+  Cloud. Their certificate is usually signed by one of the public authorities
+  built into the firmware.
+- **AWS IoT Core**, with a client certificate as in Azure. The monitor's
+  client identifier cannot be changed, so the AWS IoT policy must allow
+  `co2monitor_xxxxxx`.
+- **Other systems that read MQTT**, such as Homey, Hubitat or FHEM, by
+  reading the monitor's topics.
+
+If you try it with one of them, we would like to hear how it went.

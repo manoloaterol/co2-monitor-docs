@@ -1,8 +1,9 @@
 # Medidor de CO₂
 
-Un medidor de CO₂ para interiores con sensor NDIR de verdad, pantalla en color
-y página web propia. Publica por MQTT y Home Assistant lo encuentra solo.
-También funciona como medidor independiente, sin ninguna red.
+Un medidor de CO₂ para interiores con tecnología NDIR, pantalla IPS en color
+y página web propia mediante punto de acceso. Publica por MQTT y se integra
+automáticamente con Home Assistant. También funciona como medidor
+independiente, sin necesidad de conectarse a ninguna red.
 
 <div class="photo-todo" markdown>
 **TODO:** foto del producto
@@ -19,7 +20,7 @@ También funciona como medidor independiente, sin ninguna red.
 - **Los muestra en una pantalla en color de 1,83"**, con una gráfica
   histórica. Los colores siguen guías publicadas de calidad del aire interior.
   Ver [Leer los colores](user-guide.md#leer-los-colores).
-- **Publica por MQTT** en cualquier broker, con o sin TLS. Ver [MQTT y Home Assistant](mqtt.md).
+- **Publica por MQTT** estándar, con o sin TLS. Ver [MQTT y compatibilidad](mqtt.md).
 - **Aparece en Home Assistant** mediante el descubrimiento MQTT, sin escribir YAML.
 - **Se configura desde su propia página web.** Sin nube, sin cuenta y sin app.
   Ver [Página web y ajustes](web-page.md).
@@ -40,7 +41,7 @@ También funciona como medidor independiente, sin ninguna red.
 | Pantalla | 1,83", 240×280, color |
 | Controles | Joystick de 3 vías, LED de estado azul |
 | Inalámbrico | Wi-Fi 802.11 b/g/n, **solo 2,4 GHz** |
-| Protocolos | MQTT 3.1.1 (TLS opcional), HTTP, mDNS |
+| Protocolos | MQTT 3.1.1 (TLS 1.2 opcional), HTTP, mDNS |
 | Alimentación | 5 V por micro-USB (USB Micro-B) |
 | Consumo | Unos 97 mA con brillo máximo (≈0,5 W), unos 63 mA atenuada |
 | Dimensiones / peso | **TODO** |

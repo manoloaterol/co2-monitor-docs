@@ -32,7 +32,7 @@ screen shows its exact name.
    **`http://192.168.4.1`**.
 3. Under **Network**, choose your Wi-Fi and type its password.
 4. Optionally, under **MQTT**, enter your broker. For Home Assistant, see
-   [MQTT & Home Assistant](mqtt.md#home-assistant).
+   [Integrations](integrations.md#home-assistant).
 5. Press **Save**. The monitor restarts and joins your network.
 
 !!! warning "2.4 GHz only"

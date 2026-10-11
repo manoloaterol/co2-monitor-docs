@@ -40,7 +40,7 @@ change restarts the monitor.
 | Broker | `mqtt://host:1883` unencrypted, or `mqtts://host:8883` with TLS. Empty publishes nothing |
 | User, Password | The broker's credentials. Changing the broker's host clears the stored password unless you type it again |
 | Clear the stored password | For a broker with no password, after using one with |
-| Home Assistant auto-discovery | On by default. See [Home Assistant](mqtt.md#home-assistant) |
+| Home Assistant auto-discovery | On by default. See [Home Assistant](integrations.md#home-assistant) |
 | Discovery prefix | `homeassistant` by default. Only change it if Home Assistant uses another one |
 
 Under **Advanced: topics and TLS**:

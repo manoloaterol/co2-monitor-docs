@@ -39,7 +39,7 @@ reinicia el medidor.
 | Broker | `mqtt://host:1883` sin cifrar, o `mqtts://host:8883` con TLS. Vacío no publica nada |
 | Usuario, Contraseña | Las credenciales del broker. Al cambiar el host del broker se borra la contraseña guardada, salvo que escribas otra |
 | Borrar la contraseña guardada | Para un broker sin contraseña, después de usar uno que la tenía |
-| Alta automática en Home Assistant | Activada por defecto. Ver [Home Assistant](mqtt.md#home-assistant) |
+| Alta automática en Home Assistant | Activada por defecto. Ver [Home Assistant](integrations.md#home-assistant) |
 | Prefijo de Discovery | `homeassistant` por defecto. Cámbialo solo si Home Assistant usa otro |
 
 En **Avanzado: topics y TLS**:

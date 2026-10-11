@@ -1,30 +1,66 @@
 # Integrations
 
-Besides Home Assistant, several home automation systems understand the
-monitor's auto-discovery messages and set it up on their own. They only need
-to reach the same MQTT broker. Others, like Node-RED, ioBroker and ThingsBoard,
-read the monitor's topics directly.
+Step-by-step guides for each system the monitor has been tested with. The
+full list, with versions, and what should work although it has not been
+validated, are in [MQTT & compatibility](mqtt.md#tested).
 
-| System | Tested version | Finds the monitor on its own | Notes |
-|---|---|---|---|
-| Home Assistant | 2026.9 | Yes | See [MQTT & Home Assistant](mqtt.md#home-assistant) |
-| openHAB | 5.2 | Yes, in the Inbox | Needs two add-ons; set the units of the items |
-| Domoticz | 2026.4 | Yes | Temperature and humidity become a single device |
-| Node-RED | 5.0 | No: it reads the topics | Example flow to import below |
-| ioBroker | js-controller 7.2, MQTT adapter 6.1 | No: it reads the topics | One state per topic |
-| InfluxDB + Grafana | Telegraf 1.40, InfluxDB 2.9, Grafana 13.2 | No: Telegraf reads the topics | Ready-made dashboard to import |
-| ThingsBoard | 4.3 LTS, IoT Gateway 3.8 | Yes, through the gateway | Ready-made dashboard to import |
+Home Assistant, openHAB and Domoticz understand the monitor's auto-discovery
+messages and set it up on their own. They only need to reach the same MQTT
+broker. Others, like Node-RED, ioBroker and ThingsBoard, read the monitor's
+topics directly.
 
-In every case, leave **Home Assistant auto-discovery** ticked on the monitor's
-web page, even if you do not use Home Assistant: these systems read the same
-messages. If you changed the **Discovery prefix**, use the same one in them.
+For openHAB and Domoticz, leave **Home Assistant auto-discovery** ticked on
+the monitor's web page, even if you do not use Home Assistant: they read the
+same messages. If you changed the **Discovery prefix**, use the same one in
+them.
 
 Any other MQTT client can read the plain topics directly. They are described
-in [MQTT & Home Assistant](mqtt.md#topics).
+in [Topics](mqtt.md#topics).
 
-The end of the page shows how to publish straight to
-[Azure Event Grid](#azure-event-grid). What has been tested and what should
-work is summed up in [Compatibility](compatibility.md).
+## Home Assistant
+
+You need Home Assistant with the **MQTT integration** set up and connected
+to a broker, for example the Mosquitto add-on.
+
+1. On the monitor's web page, under **MQTT**, enter the broker address, for
+   example `mqtt://192.168.1.10:1883`, and its user and password.
+2. Leave **Home Assistant auto-discovery** ticked. It is on by default.
+3. Save.
+
+The monitor appears in Home Assistant as a device with three sensors: CO₂,
+temperature and humidity. It shows as unavailable when it goes offline. Its
+name is the **Name** setting on the web page.
+
+Discovery uses retained messages under `homeassistant/sensor/…/config`,
+which point to the same [topics](mqtt.md#topics). Clients that are not Home Assistant
+simply ignore them. The CO₂ sensor also carries the `chart_bar_s` attribute,
+taken from `info`, so the dashboard card below draws the same chart as the
+display.
+
+If Home Assistant uses another discovery prefix, change **Discovery prefix**
+to match it. If you turn discovery off or change the prefix, the monitor
+removes the old discovery messages when it restarts. Home Assistant then
+deletes the entities instead of leaving them orphaned.
+
+### Dashboard card
+
+The **CO2 Monitor Card** shows the monitor's screens in a Home Assistant
+dashboard: the same layout, typefaces and color scale, with the history chart.
+The three screens rotate like a carousel, and a tap moves to the next one.
+
+<div class="photo-todo" markdown>
+**TODO:** screenshot of the card
+</div>
+
+1. In HACS, open the menu (⋮), choose **Custom repositories** and add
+   **TODO: card repository URL** with the type **Dashboard**.
+2. Find **CO2 Monitor Card** in HACS, download it and reload the browser.
+3. Edit a dashboard, choose **Add card** and search for **CO2 Monitor**.
+
+The card picks your monitor and its sensors on its own, and takes the
+seconds per bar from the monitor, so its chart matches the display. It can show
+more bars than the display, as a longer stretch of history. The card's page
+explains every option and how to install it without HACS.
 
 ## openHAB
 

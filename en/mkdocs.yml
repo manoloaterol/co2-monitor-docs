@@ -13,8 +13,7 @@ nav:
   - Getting started: getting-started.md
   - User guide: user-guide.md
   - Web page & settings: web-page.md
-  - MQTT & Home Assistant: mqtt.md
-  - Compatibility: compatibility.md
+  - MQTT & compatibility: mqtt.md
   - Integrations: integrations.md
   - Calibration: calibration.md
   - Firmware update: firmware-update.md

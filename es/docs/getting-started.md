@@ -32,7 +32,7 @@ En el primer arranque, el medidor no tiene ninguna red guardada. Arranca en
    en **`http://192.168.4.1`**.
 3. En **Red**, elige tu Wi-Fi y escribe su contraseña.
 4. Si quieres, en **MQTT**, pon tu broker. Para Home Assistant, ver
-   [MQTT y Home Assistant](mqtt.md#home-assistant).
+   [Integraciones](integrations.md#home-assistant).
 5. Pulsa **Guardar**. El medidor se reinicia y se une a tu red.
 
 !!! warning "Solo 2,4 GHz"

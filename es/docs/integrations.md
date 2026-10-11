@@ -1,31 +1,68 @@
 # Integraciones
 
-Además de Home Assistant, varios sistemas domóticos entienden los mensajes de
-autodescubrimiento del medidor y lo dan de alta solos. Solo necesitan llegar al
-mismo broker MQTT. Otros, como Node-RED, ioBroker o ThingsBoard, leen
-directamente los topics del medidor.
+Guías paso a paso para cada sistema con el que se ha probado el medidor. La
+lista completa, con las versiones, y lo que debería funcionar aunque no se
+haya validado, están en [MQTT y compatibilidad](mqtt.md#probado).
 
-| Sistema | Versión probada | Encuentra el medidor solo | Notas |
-|---|---|---|---|
-| Home Assistant | 2026.9 | Sí | Ver [MQTT y Home Assistant](mqtt.md#home-assistant) |
-| openHAB | 5.2 | Sí, en la bandeja de entrada | Necesita dos complementos; hay que poner las unidades de los items |
-| Domoticz | 2026.4 | Sí | Temperatura y humedad quedan en un solo dispositivo |
-| Node-RED | 5.0 | No: lee los topics | Flujo de ejemplo para importar, más abajo |
-| ioBroker | js-controller 7.2, adaptador MQTT 6.1 | No: lee los topics | Un estado por topic |
-| InfluxDB + Grafana | Telegraf 1.40, InfluxDB 2.9, Grafana 13.2 | No: Telegraf lee los topics | Panel listo para importar |
-| ThingsBoard | 4.3 LTS, IoT Gateway 3.8 | Sí, a través del gateway | Panel listo para importar |
+Home Assistant, openHAB y Domoticz entienden los mensajes de autodescubrimiento
+del medidor y lo dan de alta solos. Solo necesitan llegar al mismo broker MQTT.
+Otros, como Node-RED, ioBroker o ThingsBoard, leen directamente los topics del
+medidor.
 
-En todos los casos, deja marcada **Alta automática en Home Assistant** en la
-página web del medidor, aunque no uses Home Assistant: estos sistemas leen los
-mismos mensajes. Si cambiaste el **Prefijo de descubrimiento**, usa el mismo
-en ellos.
+Para openHAB y Domoticz, deja marcada **Alta automática en Home Assistant** en
+la página web del medidor, aunque no uses Home Assistant: leen los mismos
+mensajes. Si cambiaste el **Prefijo de descubrimiento**, usa el mismo en
+ellos.
 
 Cualquier otro cliente MQTT puede leer directamente los topics planos. Están
-descritos en [MQTT y Home Assistant](mqtt.md#topics).
+descritos en [Topics](mqtt.md#topics).
 
-Al final de la página está cómo publicar directamente en
-[Azure Event Grid](#azure-event-grid). El resumen de lo probado y de lo que
-debería funcionar está en [Compatibilidad](compatibility.md).
+## Home Assistant
+
+Necesitas Home Assistant con la **integración MQTT** configurada y conectada
+a un broker, por ejemplo el complemento de Mosquitto.
+
+1. En la página web del medidor, en **MQTT**, pon la dirección del broker,
+   por ejemplo `mqtt://192.168.1.10:1883`, y su usuario y contraseña.
+2. Deja marcada **Alta automática en Home Assistant**. Viene activada por
+   defecto.
+3. Guarda.
+
+El medidor aparece en Home Assistant como un dispositivo con tres sensores:
+CO₂, temperatura y humedad. Sale como no disponible cuando se desconecta. Su
+nombre es el ajuste **Nombre** de la página web.
+
+El descubrimiento usa mensajes retenidos en `homeassistant/sensor/…/config`,
+que apuntan a los mismos [topics](mqtt.md#topics). Los clientes que no son Home
+Assistant simplemente los ignoran. El sensor de CO₂ lleva además el atributo
+`chart_bar_s`, sacado de `info`, para que la tarjeta de más abajo dibuje la
+misma gráfica que la pantalla.
+
+Si Home Assistant usa otro prefijo de descubrimiento, cambia **Prefijo de
+Discovery** para que coincida. Si desactivas el alta o cambias el prefijo, el
+medidor borra al reiniciar los mensajes de descubrimiento antiguos. Home
+Assistant elimina entonces las entidades en lugar de dejarlas huérfanas.
+
+### Tarjeta para el panel
+
+La **CO2 Monitor Card** muestra las pantallas del medidor en un panel de Home
+Assistant: la misma disposición, las mismas fuentes y la misma escala de
+colores, con la gráfica del historial. Las tres pantallas giran como un
+carrusel, y un toque pasa a la siguiente.
+
+<div class="photo-todo" markdown>
+**TODO:** captura de la tarjeta
+</div>
+
+1. En HACS, abre el menú (⋮), elige **Repositorios personalizados** (*Custom repositories*) y añade
+   **TODO: URL del repositorio de la tarjeta** con el tipo **Dashboard**.
+2. Busca **CO2 Monitor Card** en HACS, descárgala y recarga el navegador.
+3. Edita un panel, elige **Añadir tarjeta** (*Add card*) y busca **CO2 Monitor**.
+
+La tarjeta encuentra sola el medidor y sus sensores, y toma del medidor los
+segundos por barra, así que su gráfica coincide con la de la pantalla. Puede
+mostrar más barras que la pantalla, como un tramo más largo del historial. La
+página de la tarjeta explica todas las opciones y cómo instalarla sin HACS.
 
 ## openHAB
 
