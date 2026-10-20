@@ -51,11 +51,17 @@ espaciado: 1 s, 2 s, 4 s… hasta un intento por minuto.
 
 ## La Wi-Fi llega débil donde quiero ponerlo
 
+El medidor ajusta solo su potencia de emisión. Normalmente emite a 15 dBm,
+que basta cerca del router y consume menos. Si la señal del router baja de
+unos −70 dBm, o no consigue conectarse tras varios intentos, sube a 20 dBm, el
+máximo. Vuelve a 15 dBm cuando la señal mejora por encima de unos −60 dBm. La
+página web muestra arriba la potencia en uso, junto a la señal.
+
 El medidor se conecta directamente a tu router, como cualquier otro aparato
-Wi-Fi. Si la señal llega débil donde quieres ponerlo, amplía tu Wi-Fi con un
-repetidor o un sistema Wi-Fi mesh. El medidor se une a él como un aparato más,
-y su página web, la dirección `.local` y las actualizaciones siguen
-funcionando.
+Wi-Fi. Si aun así la señal llega débil donde quieres ponerlo, amplía tu
+Wi-Fi con un repetidor o un sistema Wi-Fi mesh. El medidor se une a él como
+un aparato más, y su página web, la dirección `.local` y las actualizaciones
+siguen funcionando.
 
 ## La dirección `.local` no abre
 

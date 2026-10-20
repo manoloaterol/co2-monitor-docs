@@ -14,7 +14,8 @@ Arriba, la página muestra en vivo:
 
 - la lectura actual;
 - el estado del sensor;
-- la señal Wi-Fi;
+- la señal Wi-Fi y la potencia con la que emite el medidor (ver
+  [La Wi-Fi llega débil](help.md#la-wi-fi-llega-debil-donde-quiero-ponerlo));
 - si MQTT está conectado;
 - el tiempo encendido.
 

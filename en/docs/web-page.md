@@ -15,7 +15,8 @@ The top of the page shows, live:
 
 - the current reading;
 - the sensor state;
-- the Wi-Fi signal;
+- the Wi-Fi signal and the power the monitor transmits at (see
+  [The Wi-Fi is weak](help.md#the-wi-fi-is-weak-where-i-want-to-put-it));
 - whether MQTT is connected;
 - the uptime.
 

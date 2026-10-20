@@ -47,10 +47,17 @@ slowly: 1 s, 2 s, 4 s… up to one attempt a minute.
 
 ## The Wi-Fi is weak where I want to put it
 
+The monitor adjusts its transmit power on its own. It normally transmits at
+15 dBm, which is enough near the router and draws less. If the router's
+signal drops below about −70 dBm, or it fails to connect after several
+attempts, it goes up to 20 dBm, the maximum. It goes back to 15 dBm once the
+signal recovers above about −60 dBm. The top of the web page shows the power
+in use, next to the signal.
+
 The monitor connects straight to your router, like any other Wi-Fi device.
-If the signal is weak where you want it, extend your Wi-Fi with a repeater or
-a mesh Wi-Fi system. The monitor joins it as an ordinary device, and its web
-page, `.local` address and updates keep working.
+If even so the signal is weak where you want it, extend your Wi-Fi with a
+repeater or a mesh Wi-Fi system. The monitor joins it as an ordinary device,
+and its web page, `.local` address and updates keep working.
 
 ## The `.local` address does not open
 

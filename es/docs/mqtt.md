@@ -39,7 +39,7 @@ pasar de 63 caracteres.
 | `<base>/humidity` | % de humedad relativa, entero: `48` | opcional | 0 |
 | `<base>/state` | Las tres en JSON: `{"co2":812,"temperature":22.4,"humidity":48}` | opcional | 0 |
 | `<base>/status` | `online` / `offline` | sí | 1 |
-| `<base>/info` | Diagnóstico en JSON: `fw`, `hw`, `sensor_fw`, `ip`, `mac`, `hostname`, `rssi`, `uptime_s`, `reset` (por qué se reinició la última vez: `power_on`, `software`, `panic`, `task_wdt`, `brownout`…), `chart_bar_s` (segundos por barra de la gráfica, que es también el periodo de publicación) | sí | 1 al conectar, 0 después |
+| `<base>/info` | Diagnóstico en JSON: `fw`, `hw`, `sensor_fw`, `ip`, `mac`, `hostname`, `rssi`, `tx_dbm` (potencia de emisión en uso: 15 o 20 dBm), `uptime_s`, `reset` (por qué se reinició la última vez: `power_on`, `software`, `panic`, `task_wdt`, `brownout`…), `chart_bar_s` (segundos por barra de la gráfica, que es también el periodo de publicación) | sí | 1 al conectar, 0 después |
 
 - **Cadencia.** Las lecturas se publican una vez por barra de la gráfica,
   con la media de las lecturas del sensor en ese tiempo. Por defecto, cada

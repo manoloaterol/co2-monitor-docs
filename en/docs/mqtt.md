@@ -39,7 +39,7 @@ it can be at most 63 characters long.
 | `<base>/humidity` | % relative humidity, integer: `48` | optional | 0 |
 | `<base>/state` | All three as JSON: `{"co2":812,"temperature":22.4,"humidity":48}` | optional | 0 |
 | `<base>/status` | `online` / `offline` | yes | 1 |
-| `<base>/info` | Diagnostics as JSON: `fw`, `hw`, `sensor_fw`, `ip`, `mac`, `hostname`, `rssi`, `uptime_s`, `reset` (why it last restarted: `power_on`, `software`, `panic`, `task_wdt`, `brownout`…), `chart_bar_s` (seconds per chart bar, which is also how often readings are published) | yes | 1 on connect, 0 after |
+| `<base>/info` | Diagnostics as JSON: `fw`, `hw`, `sensor_fw`, `ip`, `mac`, `hostname`, `rssi`, `tx_dbm` (transmit power in use: 15 or 20 dBm), `uptime_s`, `reset` (why it last restarted: `power_on`, `software`, `panic`, `task_wdt`, `brownout`…), `chart_bar_s` (seconds per chart bar, which is also how often readings are published) | yes | 1 on connect, 0 after |
 
 - **How often.** Readings are published once per chart bar, as the average
   of the sensor's readings over that time. By default that is every 20 s, the
