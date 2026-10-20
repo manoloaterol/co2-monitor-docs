@@ -50,10 +50,32 @@ within its tolerance and calibrating adds little.
 
 - **The average, not the last reading.** It calibrates against the average of
   the last 2 minutes.
-- **A correction limit.** A correction of more than 150 ppm is refused. It
-  is far more likely that the air is not a good reference than that the sensor
-  has drifted that much.
+- **A correction limit.** A correction of more than 150 ppm needs a second,
+  explicit confirmation. It is far more likely that the air is not a good
+  reference than that the sensor has drifted that much. See
+  [Wide calibration](#wide-calibration).
 - **The reference** must be between 400 and 2000 ppm.
+
+### Wide calibration
+
+Now and then a sensor comes out of the box far off: a few hundred ppm low or
+high, while it reacts normally to breath and follows another monitor's curve.
+For that case the page allows a **wide calibration**. Enter a reference more
+than 150 ppm away from the reading and, instead of refusing it, the page asks
+you to confirm.
+
+- **Only with a reference you trust:** outdoor air, or a calibrated monitor
+  right next to it. With another monitor, use the average of its last 2
+  minutes (`cal.avg` in its `/api/status`), not the last reading. It copies
+  that monitor's error, but both will agree.
+- The readings may vary by up to 150 ppm over the 2 minutes, instead of 40.
+- **Undo needs the right air.** Undoing applies the opposite correction to
+  the current reading, and the sensor accepts no reference below 400 ppm. So
+  the reading minus the correction must stay at 400 or more. After a
+  correction of +370 ppm, for instance, that means more than about 770 ppm,
+  as indoors with people around, but not outdoors. The page disables the
+  button and says why when the air does not allow it. Calibrating again, with
+  a new reference, is always possible.
 
 ### It lasts
 
@@ -79,6 +101,9 @@ over the following days it would override a manual calibration.
 ```sh
 curl -H 'X-CO2-Monitor: 1' -H 'Content-Type: application/json' \
      -d '{"reference": 430}' http://co2-monitor-xxxxxx.local/api/frc
+
+curl -H 'X-CO2-Monitor: 1' -H 'Content-Type: application/json' \
+     -d '{"reference": 430, "wide": true}' http://co2-monitor-xxxxxx.local/api/frc
 
 curl -H 'X-CO2-Monitor: 1' -H 'Content-Type: application/json' \
      -d '{"undo": true}' http://co2-monitor-xxxxxx.local/api/frc

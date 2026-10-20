@@ -50,10 +50,32 @@ su tolerancia y calibrar aporta poco.
 
 - **La media, no la última lectura.** Calibra contra la media de los últimos
   2 minutos.
-- **Un límite de corrección.** Se rechaza una corrección de más de 150 ppm.
-  Es mucho más probable un aire que no sirve de referencia que un sensor tan
-  desviado.
+- **Un límite de corrección.** Una corrección de más de 150 ppm exige una
+  segunda confirmación expresa. Es mucho más probable un aire que no sirve de
+  referencia que un sensor tan desviado. Ver
+  [Calibración amplia](#calibracion-amplia).
 - **La referencia** tiene que estar entre 400 y 2000 ppm.
+
+### Calibración amplia
+
+A veces un sensor llega de fábrica muy desviado: marca unos cientos de ppm de
+menos o de más, aunque reacciona con normalidad al aliento y sigue la curva de
+otro medidor. Para ese caso la página permite una **calibración amplia**. Si
+pones una referencia a más de 150 ppm de la lectura, en vez de rechazarla te
+pide confirmación.
+
+- **Solo con una referencia de confianza:** aire exterior, o un medidor
+  calibrado justo al lado. Con otro medidor, usa la media de sus últimos
+  2 minutos (`cal.avg` en su `/api/status`), no la última lectura. Copia el
+  error de ese medidor, pero los dos coincidirán.
+- Las lecturas pueden variar hasta 150 ppm en los 2 minutos, en vez de 40.
+- **Deshacer necesita el aire adecuado.** Deshacer aplica la corrección
+  contraria sobre la lectura actual, y el sensor no acepta referencias por
+  debajo de 400 ppm. Así que la lectura menos la corrección tiene que quedar
+  en 400 o más. Tras una corrección de +370 ppm, por ejemplo, hacen falta más
+  de unos 770 ppm, como en interior con gente, pero no en el exterior. Si el
+  aire no lo permite, la página desactiva el botón y explica por qué. Volver
+  a calibrar, con una referencia nueva, siempre se puede.
 
 ### Se conserva
 
@@ -80,6 +102,9 @@ sustituiría a la calibración manual.
 ```sh
 curl -H 'X-CO2-Monitor: 1' -H 'Content-Type: application/json' \
      -d '{"reference": 430}' http://co2-monitor-xxxxxx.local/api/frc
+
+curl -H 'X-CO2-Monitor: 1' -H 'Content-Type: application/json' \
+     -d '{"reference": 430, "wide": true}' http://co2-monitor-xxxxxx.local/api/frc
 
 curl -H 'X-CO2-Monitor: 1' -H 'Content-Type: application/json' \
      -d '{"undo": true}' http://co2-monitor-xxxxxx.local/api/frc
