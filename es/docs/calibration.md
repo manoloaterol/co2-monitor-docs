@@ -44,6 +44,10 @@ cantidad. Se llama *recalibración forzada* (FRC).
 Hay dos referencias válidas:
 
 - **El aire exterior**, unos 430 ppm (2026). Es la habitual y la más fiable.
+  Sube unos 2–2,5 ppm cada año; el valor del año en curso lo publica la NOAA
+  con las medidas del observatorio de Mauna Loa, en Hawái:
+  [Trends in atmospheric CO₂](https://gml.noaa.gov/ccgg/trends/). Es aire
+  limpio, lejos de cualquier ciudad: cerca de casa suele haber algo más.
 - **Otro medidor calibrado**, justo al lado. Sirve en interior, y deja los dos
   medidores de acuerdo.
 
@@ -80,7 +84,8 @@ poco. Si reacciona así, cualquier desviación se corrige calibrando.
    activa tras 2 minutos de lecturas sin cortes que varíen menos de 40 ppm.
    Esperar de 5 a 10 minutos es mejor.
 5. Pon la referencia. El aire exterior tiene unos **430 ppm** (2026), algo
-   más cerca de una ciudad.
+   más cerca de una ciudad. Para otros años, toma el último valor de
+   [la NOAA](https://gml.noaa.gov/ccgg/trends/).
 6. Pulsa **Calibrar ahora** y confirma.
 
 ### Con otro medidor de referencia

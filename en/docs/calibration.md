@@ -44,6 +44,10 @@ is called *forced recalibration* (FRC).
 There are two good references:
 
 - **Outdoor air**, about 430 ppm (2026). The usual one, and the most reliable.
+  It rises by about 2–2.5 ppm a year; NOAA publishes the current value from
+  the Mauna Loa observatory, in Hawaii:
+  [Trends in atmospheric CO₂](https://gml.noaa.gov/ccgg/trends/). That is
+  clean air, far from any city: near home there is usually a little more.
 - **Another calibrated monitor**, right next to it. It works indoors, and
   leaves both monitors in agreement.
 
@@ -80,7 +84,8 @@ slowly. If it reacts like that, any offset can be calibrated away.
    after 2 minutes of unbroken readings that vary by less than 40 ppm. Waiting
    5 to 10 minutes is better.
 5. Enter the reference. Outdoor air is about **430 ppm** (2026), somewhat
-   more near a city.
+   more near a city. For other years, take the latest value from
+   [NOAA](https://gml.noaa.gov/ccgg/trends/).
 6. Press **Calibrate now** and confirm.
 
 ### With another monitor as reference
