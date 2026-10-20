@@ -19,6 +19,12 @@ onto it: exhaled air carries about 40,000 ppm of CO₂.
 The sensor warms itself slightly while it works. Correct it once against a
 good thermometer. See [Temperature](calibration.md#temperature).
 
+## CO₂ does not match another monitor or outdoor air
+
+Outdoors it should read about 430 ppm, and two monitors side by side can
+differ somewhat without either being wrong. See [Calibration](calibration.md),
+which starts with a table of each situation and what to do.
+
 ## The setup page does not open
 
 - Check that your phone is joined to the `CO2-Monitor-xxxxxx` network. Some

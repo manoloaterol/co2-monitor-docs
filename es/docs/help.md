@@ -23,6 +23,12 @@ CO₂.
 El sensor se calienta un poco mientras funciona. Corrígelo una vez contra un
 buen termómetro. Ver [Temperatura](calibration.md#temperatura).
 
+## El CO₂ no cuadra con otro medidor o con el exterior
+
+En el exterior debería marcar unos 430 ppm, y dos medidores juntos pueden
+diferir algo sin que ninguno esté mal. Ver [Calibración](calibration.md), que
+empieza con una tabla de cada situación y qué hacer.
+
 ## La página de configuración no se abre
 
 - Comprueba que el móvil está conectado a la red `CO2-Monitor-xxxxxx`.
