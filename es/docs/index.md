@@ -44,7 +44,7 @@ independiente, sin necesidad de conectarse a ninguna red.
 | Inalámbrico | Wi-Fi 802.11 b/g/n, **solo 2,4 GHz** |
 | Protocolos | MQTT 3.1.1 (TLS 1.2 opcional), HTTP, mDNS |
 | Alimentación | 5 V por micro-USB (USB Micro-B) |
-| Consumo | Unos 97 mA con brillo máximo (≈0,5 W), unos 63 mA atenuada |
+| Consumo | Unos 77 mA con brillo máximo (≈0,4 W), unos 43 mA con la pantalla apagada |
 | Dimensiones / peso | **TODO** |
 | En la caja | Medidor de CO₂, cable USB |
 

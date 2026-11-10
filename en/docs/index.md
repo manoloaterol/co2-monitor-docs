@@ -41,7 +41,7 @@ New here? Start with [Getting started](getting-started.md).
 | Wireless | Wi-Fi 802.11 b/g/n, **2.4 GHz only** |
 | Protocols | MQTT 3.1.1 (TLS 1.2 optional), HTTP, mDNS |
 | Power | 5 V over micro-USB (USB Micro-B) |
-| Consumption | About 97 mA at full brightness (≈0.5 W), about 63 mA dimmed |
+| Consumption | About 77 mA at full brightness (≈0.4 W), about 43 mA with the screen off |
 | Dimensions / weight | **TODO** |
 | In the box | CO₂ monitor, USB cable |
 
