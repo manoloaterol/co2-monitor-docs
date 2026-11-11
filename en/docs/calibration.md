@@ -165,9 +165,12 @@ monitor's page or API.
 
 ### Automatic self-calibration
 
-The SCD30 also has an automatic self-calibration (ASC). The monitor leaves
-it as it is. If the sensor has it switched on, the page warns you, because
-over the following days it would override a manual calibration.
+The monitor does not use automatic self-calibration. It is a function of the
+SCD30 sensor itself (ASC), which assumes the sensor sees fresh air regularly,
+something that rarely holds indoors. The monitor never switches it on or off:
+it only checks it at start-up. If a sensor came with it switched on, the
+**CO₂ calibration** section shows a warning, because over the following days
+it would override a manual calibration.
 
 ### CO₂ problems
 

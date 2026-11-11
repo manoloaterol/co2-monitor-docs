@@ -167,9 +167,12 @@ página o la API del medidor.
 
 ### Autocalibración
 
-El SCD30 tiene además una autocalibración (ASC). El medidor no la toca. Si el
-sensor la trae activada, la página lo avisa, porque en los días siguientes
-sustituiría a la calibración manual.
+El medidor no usa la autocalibración automática. Es una función del propio
+sensor SCD30 (ASC), que da por hecho que el sensor ve aire fresco con
+regularidad, algo que en interior rara vez se cumple. El medidor nunca la
+activa ni la desactiva: solo la comprueba al arrancar. Si un sensor viniera con
+ella activada, la sección **Calibración de CO₂** muestra un aviso, porque en
+los días siguientes sustituiría a la calibración manual.
 
 ### Problemas con el CO₂
 
