@@ -33,3 +33,14 @@
   text-align: center;
   color: var(--md-default-fg-color--light);
 }
+
+/* Line drawings exported from FreeCAD: black lines on a transparent
+   background, so they sit on a white card to stay readable in dark mode. */
+img.drawing {
+  display: block;
+  width: 100%;
+  background: #fff;
+  border-radius: 6px;
+  padding: 0.5rem;
+  box-sizing: border-box;
+}

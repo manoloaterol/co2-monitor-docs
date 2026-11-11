@@ -42,9 +42,8 @@ New here? Start with [Getting started](getting-started.md).
 | Protocols | MQTT 3.1.1 (TLS 1.2 optional), HTTP, mDNS |
 | Power | 5 V over micro-USB (USB Micro-B) |
 | Consumption | About 77 mA at full brightness (≈0.4 W), about 43 mA with the screen off |
-| Dimensions / weight | **TODO** |
+| Dimensions / weight | 56 × 56 × 16.5 mm, 35 g |
+| Enclosure | 3D-printed, matte metallic PLA |
 | In the box | CO₂ monitor, USB cable |
 
-<div class="photo-todo" markdown>
-**TODO:** dimension drawing
-</div>
+![Dimension drawing: 56 × 56 × 16.5 mm, side, front and isometric views](assets/dimensions.svg){ .drawing }

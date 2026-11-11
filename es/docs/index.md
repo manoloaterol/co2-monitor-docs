@@ -45,9 +45,8 @@ independiente, sin necesidad de conectarse a ninguna red.
 | Protocolos | MQTT 3.1.1 (TLS 1.2 opcional), HTTP, mDNS |
 | Alimentación | 5 V por micro-USB (USB Micro-B) |
 | Consumo | Unos 77 mA con brillo máximo (≈0,4 W), unos 43 mA con la pantalla apagada |
-| Dimensiones / peso | **TODO** |
+| Dimensiones / peso | 56 × 56 × 16,5 mm, 35 g |
+| Caja | Impresa en 3D, PLA mate de color metálico |
 | En la caja | Medidor de CO₂, cable USB |
 
-<div class="photo-todo" markdown>
-**TODO:** plano de dimensiones
-</div>
+![Plano de dimensiones: 56 × 56 × 16,5 mm, vistas lateral, frontal e isométrica](assets/dimensions.svg){ .drawing }
