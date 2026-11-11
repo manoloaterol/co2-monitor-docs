@@ -13,7 +13,7 @@ como exigen sus licencias. Los textos legales se dejan en su idioma original.
 Se usa para comunicarse con el sensor de CO₂. Licencia BSD de 3 cláusulas.
 
 ```text
-Copyright (c) 2018, Sensirion AG
+Copyright (c) 2018, 2022, Sensirion AG
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without

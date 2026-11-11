@@ -12,7 +12,7 @@ here as their licences require.
 Used to talk to the CO₂ sensor. BSD 3-Clause licence.
 
 ```text
-Copyright (c) 2018, Sensirion AG
+Copyright (c) 2018, 2022, Sensirion AG
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
