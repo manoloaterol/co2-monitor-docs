@@ -57,6 +57,16 @@ The three screens rotate like a carousel, and a tap moves to the next one.
 **TODO:** screenshot of the card
 </div>
 
+The card is optional: the monitor works in Home Assistant without it. The
+easiest way to install it is **HACS** (Home Assistant Community Store), which
+**does not come with Home Assistant**. If you do not have it yet, install it
+first by following the [official HACS guide](https://hacs.xyz/docs/use/). It
+takes a few minutes, a restart and a GitHub account. If you would rather not
+install HACS, the [card's page](https://github.com/manoloaterol/co2-monitor-card#manual) explains how to install it by
+hand.
+
+With HACS installed:
+
 1. In HACS, open the menu (⋮), choose **Custom repositories** and add
    `https://github.com/manoloaterol/co2-monitor-card` with the type **Dashboard**.
 2. Find **CO2 Monitor Card** in HACS, download it and reload the browser.
@@ -65,7 +75,7 @@ The three screens rotate like a carousel, and a tap moves to the next one.
 The card picks your monitor and its sensors on its own, and takes the
 seconds per bar from the monitor, so its chart matches the display. It can show
 more bars than the display, as a longer stretch of history. The card's page
-explains every option and how to install it without HACS.
+explains every option.
 
 ## openHAB
 

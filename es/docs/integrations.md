@@ -58,6 +58,16 @@ carrusel, y un toque pasa a la siguiente.
 **TODO:** captura de la tarjeta
 </div>
 
+La tarjeta es opcional: el medidor funciona en Home Assistant sin ella. La
+forma más sencilla de instalarla es **HACS** (Home Assistant Community Store),
+que **no viene con Home Assistant**. Si aún no lo tienes, instálalo antes
+siguiendo la [guía oficial de HACS](https://hacs.xyz/docs/use/), en inglés.
+Lleva unos minutos, un reinicio y una cuenta de GitHub. Si prefieres no
+instalar HACS, la [página de la tarjeta](https://github.com/manoloaterol/co2-monitor-card#manual) explica cómo
+instalarla a mano.
+
+Con HACS instalado:
+
 1. En HACS, abre el menú (⋮), elige **Repositorios personalizados** (*Custom repositories*) y añade
    `https://github.com/manoloaterol/co2-monitor-card` con el tipo **Dashboard**.
 2. Busca **CO2 Monitor Card** en HACS, descárgala y recarga el navegador.
@@ -66,7 +76,7 @@ carrusel, y un toque pasa a la siguiente.
 La tarjeta encuentra sola el medidor y sus sensores, y toma del medidor los
 segundos por barra, así que su gráfica coincide con la de la pantalla. Puede
 mostrar más barras que la pantalla, como un tramo más largo del historial. La
-página de la tarjeta explica todas las opciones y cómo instalarla sin HACS.
+página de la tarjeta explica todas las opciones.
 
 ## openHAB
 
