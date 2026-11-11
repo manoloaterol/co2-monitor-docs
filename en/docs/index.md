@@ -20,7 +20,8 @@ monitor, with no need to join any network.
 - **Shows them on a 1.83" colour IPS display**, with a history chart. The colours
   follow published indoor air guidelines. See [Reading the colours](user-guide.md#reading-the-colours).
 - **Publishes over standard MQTT**, with or without TLS. See [MQTT & compatibility](mqtt.md).
-- **Appears in Home Assistant** through MQTT discovery, with no YAML to write.
+- **Appears on its own in Home Assistant, openHAB and Domoticz** through MQTT
+  discovery, with no YAML to write. See [Integrations](integrations.md).
 - **Is set up from its own web page.** No cloud, no account and no app. See [Web page & settings](web-page.md).
 - **Updates over the network**, and goes back to the previous firmware on its
   own if an update fails. See [Firmware update](firmware-update.md).
@@ -31,19 +32,20 @@ New here? Start with [Getting started](getting-started.md).
 
 | | |
 |---|---|
-| Microcontroller | ESP32-S2, 4 MB flash, PSRAM |
+| Microcontroller | ESP32-S2, 4 MB flash, 2 MB PSRAM |
 | CO₂ sensor | Sensirion SCD30, NDIR |
 | CO₂ range | 400–10,000 ppm |
 | CO₂ accuracy | ±(30 ppm + 3 % of reading) |
 | Also measures | Temperature, relative humidity |
 | Display | 1.83" IPS, 240×280, colour |
-| Controls | 3-way joystick, blue status LED |
+| Controls | 3-way joystick |
+| Indicator | Blue status LED |
 | Wireless | Wi-Fi 802.11 b/g/n, **2.4 GHz only** |
 | Protocols | MQTT 3.1.1 (TLS 1.2 optional), HTTP, mDNS |
 | Power | 5 V over micro-USB (USB Micro-B) |
 | Consumption | About 77 mA at full brightness (≈0.4 W), about 43 mA with the screen off |
 | Dimensions / weight | 56 × 56 × 16.5 mm, 35 g |
 | Enclosure | 3D-printed, matte metallic PLA |
-| In the box | CO₂ monitor, USB cable |
+| In the box | CO₂ monitor, USB cable. No power adapter: any 5 V USB phone charger works |
 
 ![Dimension drawing: 56 × 56 × 16.5 mm, side, front and isometric views](assets/dimensions.svg){ .drawing }
