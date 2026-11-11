@@ -2,8 +2,10 @@
 
 ## Firmware
 
-El firmware del medidor es de código abierto. **TODO:** licencia y enlace al
-repositorio.
+El firmware del medidor es software libre, bajo la
+[GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.html).
+El código fuente está en <https://github.com/manoloaterol/co2-monitor-firmware>. Los mismos avisos están en la propia
+página web del medidor, en **Sistema → Licencias**.
 
 Incluye el software de terceros que sigue. Sus avisos se reproducen aquí, tal
 como exigen sus licencias. Los textos legales se dejan en su idioma original.
@@ -74,4 +76,31 @@ La SIL Open Font License está en <https://openfontlicense.org>.
 El firmware está construido sobre
 [ESP-IDF](https://github.com/espressif/esp-idf) de Espressif, licencia
 Apache 2.0, que incluye a su vez otros componentes de terceros con sus propias
-licencias. **TODO:** decidir si se enumeran aquí.
+licencias. El firmware usa además los componentes `mqtt` y `mdns` de
+Espressif, con la misma licencia.
+
+## cJSON
+
+Se usa para leer y escribir JSON. Licencia MIT.
+
+```text
+Copyright (c) 2009-2017 Dave Gamble and cJSON contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+```

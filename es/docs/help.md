@@ -102,4 +102,5 @@ la Wi-Fi desde la página.
 
 ## Contacto
 
-**TODO:** contacto de soporte (correo, issues de GitHub).
+Abre una incidencia (*issue*) en el [repositorio del firmware](https://github.com/manoloaterol/co2-monitor-firmware/issues), o
+escríbenos desde la tienda donde compraste el medidor.

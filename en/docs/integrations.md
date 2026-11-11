@@ -58,7 +58,7 @@ The three screens rotate like a carousel, and a tap moves to the next one.
 </div>
 
 1. In HACS, open the menu (⋮), choose **Custom repositories** and add
-   **TODO: card repository URL** with the type **Dashboard**.
+   `https://github.com/manoloaterol/co2-monitor-card` with the type **Dashboard**.
 2. Find **CO2 Monitor Card** in HACS, download it and reload the browser.
 3. Edit a dashboard, choose **Add card** and search for **CO2 Monitor**.
 

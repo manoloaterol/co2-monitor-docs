@@ -1,6 +1,7 @@
 INHERIT: ../base.yml
 
 site_name: CO₂ Monitor
+site_url: https://manoloaterol.github.io/co2-monitor-docs/en/
 site_description: User manual for the CO₂ Monitor, an NDIR CO₂, temperature and humidity monitor with MQTT and Home Assistant support.
 docs_dir: docs
 site_dir: ../site/en

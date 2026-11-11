@@ -2,7 +2,7 @@
 
 ## Por red
 
-1. Descarga el último firmware `.bin` de **TODO: URL de las versiones**.
+1. Descarga el último firmware `.bin` de la [página de versiones](https://github.com/manoloaterol/co2-monitor-firmware/releases).
 2. Abre la página web del medidor y ve a **Sistema**.
 3. En **Actualizar firmware**, elige el fichero `.bin` y pulsa **Subir y
    reiniciar**.

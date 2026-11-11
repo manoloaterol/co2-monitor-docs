@@ -2,7 +2,7 @@
 
 ## Over the network
 
-1. Download the latest firmware `.bin` from **TODO: releases URL**.
+1. Download the latest firmware `.bin` from the [releases page](https://github.com/manoloaterol/co2-monitor-firmware/releases).
 2. Open the monitor's web page and go to **System**.
 3. Under **Firmware update**, choose the `.bin` file and press **Upload and
    restart**.

@@ -55,5 +55,18 @@ moving to it is planned once it is stable.
 
 ## Still to fill in
 
-Search the pages for `TODO`: photos, dimensions, shop links, firmware
-licence and repository, releases URL, support contact.
+Search the pages for `TODO`: photos, dimensions and shop links.
+
+## Publishing
+
+`.github/workflows/pages.yml` builds the site with `build.sh` and publishes it
+to GitHub Pages on every push to `main`, at
+<https://manoloaterol.github.io/co2-monitor-docs/>. In the repository
+settings, Pages must use **GitHub Actions** as its source.
+
+## Licence
+
+The documentation, including the dashboards in `shared/`, is under
+[Creative Commons Attribution-ShareAlike 4.0](https://creativecommons.org/licenses/by-sa/4.0/)
+(CC BY-SA 4.0); the full text is in [`LICENSE`](LICENSE). The firmware it
+describes is under the GPL-3.0, in its own repository.

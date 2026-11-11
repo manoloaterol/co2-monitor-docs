@@ -95,4 +95,5 @@ the page.
 
 ## Contact
 
-**TODO:** support contact (email, GitHub issues).
+Open an issue in the [firmware repository](https://github.com/manoloaterol/co2-monitor-firmware/issues), or write to us
+through the shop where you bought the monitor.

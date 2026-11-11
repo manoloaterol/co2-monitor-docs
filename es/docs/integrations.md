@@ -59,7 +59,7 @@ carrusel, y un toque pasa a la siguiente.
 </div>
 
 1. En HACS, abre el menú (⋮), elige **Repositorios personalizados** (*Custom repositories*) y añade
-   **TODO: URL del repositorio de la tarjeta** con el tipo **Dashboard**.
+   `https://github.com/manoloaterol/co2-monitor-card` con el tipo **Dashboard**.
 2. Busca **CO2 Monitor Card** en HACS, descárgala y recarga el navegador.
 3. Edita un panel, elige **Añadir tarjeta** (*Add card*) y busca **CO2 Monitor**.
 

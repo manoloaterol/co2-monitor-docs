@@ -1,11 +1,13 @@
 # Shared by the English and the Spanish site. Each language is a separate
 # MkDocs build that inherits this file (see en/mkdocs.yml and es/mkdocs.yml).
 
-# TODO: the final URL, once the GitHub repository exists.
-# site_url: https://<user>.github.io/co2-monitor-docs/
+# site_url is set per language, in en/mkdocs.yml and es/mkdocs.yml.
 
-repo_url: https://github.com/TODO/co2-monitor
-repo_name: co2-monitor
+repo_url: https://github.com/manoloaterol/co2-monitor-firmware
+repo_name: co2-monitor-firmware
+copyright: >-
+  © 2026 Manuel Alfonso Terol (MAT) ·
+  <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>
 
 theme:
   name: material

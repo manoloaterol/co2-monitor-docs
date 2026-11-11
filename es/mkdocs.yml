@@ -1,5 +1,6 @@
 INHERIT: ../base.yml
 
+site_url: https://manoloaterol.github.io/co2-monitor-docs/es/
 site_name: Medidor de CO₂
 site_description: Manual del medidor de CO₂, un medidor NDIR de CO₂, temperatura y humedad con MQTT y Home Assistant.
 docs_dir: docs
