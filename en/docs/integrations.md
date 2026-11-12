@@ -53,9 +53,10 @@ The **CO2 Monitor Card** shows the monitor's screens in a Home Assistant
 dashboard: the same layout, typefaces and color scale, with the history chart.
 The three screens rotate like a carousel, and a tap moves to the next one.
 
-<div class="photo-todo" markdown>
-**TODO:** screenshot of the card
-</div>
+<figure markdown="span">
+  ![Three CO2 Monitor cards in a Home Assistant dashboard, on the big CO₂ screen](img/ha-card.png)
+  <figcaption>Three monitors in a Home Assistant dashboard, each one on its big CO₂ screen.</figcaption>
+</figure>
 
 The card is optional: the monitor works in Home Assistant without it. The
 easiest way to install it is **HACS** (Home Assistant Community Store), which
@@ -267,9 +268,10 @@ To keep the readings for months and chart them, the usual recipe is
 **Telegraf**, which reads them from the broker, **InfluxDB**, which stores
 them, and **Grafana**, which draws them.
 
-<div class="photo-todo" markdown>
-**TODO:** screenshot of the Grafana dashboard
-</div>
+<figure markdown="span">
+  ![Grafana dashboard with CO₂ gauges, temperature, humidity and CO₂ history for three monitors](img/grafana.png)
+  <figcaption>The dashboard you can import in step 4, with three monitors.</figcaption>
+</figure>
 
 1. In InfluxDB 2, create a bucket called `co2`, and an API token that can
    write to it (for Telegraf) and read from it (for Grafana). Choose the

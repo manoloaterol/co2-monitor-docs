@@ -35,6 +35,11 @@ En el primer arranque, el medidor no tiene ninguna red guardada. Arranca en
    [Integraciones](integrations.md#home-assistant).
 5. Pulsa **Guardar**. El medidor se reinicia y se une a tu red.
 
+<figure markdown="span">
+  ![La página de configuración abierta sola en un iPhone al unirse a la red del medidor](img/captive-portal.png){ .phone }
+  <figcaption>La página de configuración, abierta sola en el móvil.</figcaption>
+</figure>
+
 !!! warning "Solo 2,4 GHz"
     El medidor no puede unirse a una red de 5 GHz. La mayoría de los routers
     ofrecen las dos bandas con el mismo nombre, y eso funciona. Un router que

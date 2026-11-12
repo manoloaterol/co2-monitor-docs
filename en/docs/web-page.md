@@ -9,6 +9,11 @@ The page is in English and Spanish. It opens in the language of the
 display, and the EN/ES selector at the top remembers another choice in that
 browser.
 
+<figure markdown="span">
+  ![The monitor's web page: live reading and status, and the folded settings sections](img/web-ui-en.png){ .page }
+  <figcaption>The web page on your network.</figcaption>
+</figure>
+
 ## Live status
 
 The top of the page shows, live:

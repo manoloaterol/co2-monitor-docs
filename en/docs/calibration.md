@@ -51,6 +51,11 @@ There are two good references:
 - **Another calibrated monitor**, right next to it. It works indoors, and
   leaves both monitors in agreement.
 
+<figure markdown="span">
+  ![The CO₂ calibration section open, with the steps, the reference field and the Calibrate now button](img/web-calibration-en.png){ .page }
+  <figcaption>The CO₂ calibration section. Taken indoors, so the page warns that the correction would be too large.</figcaption>
+</figure>
+
 ### Does it need calibrating?
 
 Take the monitor outdoors as explained in [With outdoor air](#with-outdoor-air)

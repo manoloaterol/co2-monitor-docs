@@ -54,9 +54,10 @@ Assistant: la misma disposición, las mismas fuentes y la misma escala de
 colores, con la gráfica del historial. Las tres pantallas giran como un
 carrusel, y un toque pasa a la siguiente.
 
-<div class="photo-todo" markdown>
-**TODO:** captura de la tarjeta
-</div>
+<figure markdown="span">
+  ![Tres tarjetas CO2 Monitor en un panel de Home Assistant, en la pantalla de CO₂ grande](img/ha-card.png)
+  <figcaption>Tres medidores en un panel de Home Assistant, cada uno en su pantalla de CO₂ grande.</figcaption>
+</figure>
 
 La tarjeta es opcional: el medidor funciona en Home Assistant sin ella. La
 forma más sencilla de instalarla es **HACS** (Home Assistant Community Store),
@@ -270,9 +271,10 @@ Para guardar las lecturas durante meses y verlas en gráficas, la receta
 habitual es **Telegraf**, que las lee del broker, **InfluxDB**, que las guarda,
 y **Grafana**, que las dibuja.
 
-<div class="photo-todo" markdown>
-**TODO:** captura del panel de Grafana
-</div>
+<figure markdown="span">
+  ![Panel de Grafana con indicadores de CO₂, temperatura, humedad e histórico de CO₂ de tres medidores](img/grafana.png)
+  <figcaption>El panel que se importa en el paso 4, con tres medidores.</figcaption>
+</figure>
 
 1. En InfluxDB 2, crea un bucket llamado `co2` y un token de API que pueda
    escribir en él (para Telegraf) y leerlo (para Grafana). Elige la retención

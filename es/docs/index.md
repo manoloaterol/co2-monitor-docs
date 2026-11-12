@@ -6,9 +6,7 @@ de acceso. Publica por MQTT y se integra automáticamente con sistemas como
 Home Assistant, openHAB o Domoticz. También funciona como medidor
 independiente, sin necesidad de conectarse a ninguna red.
 
-<div class="photo-todo" markdown>
-**TODO:** foto del producto
-</div>
+![El medidor de CO₂ marcando 1490 ppm en su pantalla de CO₂ grande](img/device-angle.jpg){ .hero }
 
 [:material-cart: Comprar en Tindie](https://www.tindie.com/TODO){ .md-button .md-button--primary }
 [:material-cart: Comprar en Lectronz](https://lectronz.com/TODO){ .md-button }
@@ -52,3 +50,8 @@ independiente, sin necesidad de conectarse a ninguna red.
 | En la caja | Medidor de CO₂, cable USB. Sin cargador: vale cualquier cargador USB de 5 V de móvil |
 
 ![Plano de dimensiones: 56 × 56 × 16,5 mm, vistas lateral, frontal e isométrica](assets/dimensions.svg){ .drawing }
+
+<figure markdown="span">
+  ![La placa dentro de la caja, con el sensor Sensirion SCD30 encima](img/device-inside.jpg)
+  <figcaption>Por dentro: la placa principal con el ESP32-S2 y, encima, el sensor Sensirion SCD30.</figcaption>
+</figure>

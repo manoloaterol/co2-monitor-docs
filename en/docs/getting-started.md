@@ -35,6 +35,11 @@ screen shows its exact name.
    [Integrations](integrations.md#home-assistant).
 5. Press **Save**. The monitor restarts and joins your network.
 
+<figure markdown="span">
+  ![The setup page opened by itself on an iPhone after joining the monitor's network](img/captive-portal.png){ .phone }
+  <figcaption>The setup page, opened by itself on a phone.</figcaption>
+</figure>
+
 !!! warning "2.4 GHz only"
     The monitor cannot join a 5 GHz network. Most routers offer both bands
     under the same name, and that works. A router with only 5 GHz does not.

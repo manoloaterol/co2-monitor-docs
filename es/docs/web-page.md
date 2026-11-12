@@ -8,6 +8,11 @@ El medidor sirve su propia página de ajustes:
 La página está en inglés y en castellano. Sale en el idioma de la pantalla, y
 el selector EN/ES de arriba recuerda otra elección en ese navegador.
 
+<figure markdown="span">
+  ![La página web del medidor: lectura y estado en vivo, y las secciones de ajustes plegadas](img/web-ui-es.png){ .page }
+  <figcaption>La página web en tu red.</figcaption>
+</figure>
+
 ## Estado en vivo
 
 Arriba, la página muestra en vivo:

@@ -51,6 +51,11 @@ Hay dos referencias válidas:
 - **Otro medidor calibrado**, justo al lado. Sirve en interior, y deja los dos
   medidores de acuerdo.
 
+<figure markdown="span">
+  ![La sección Calibración de CO₂ abierta, con los pasos, el campo de referencia y el botón Calibrar ahora](img/web-calibration-es.png){ .page }
+  <figcaption>La sección Calibración de CO₂. Hecha en interior, así que la página avisa de que la corrección sería demasiado grande.</figcaption>
+</figure>
+
 ### ¿Hace falta calibrar?
 
 Saca el medidor al exterior como se explica en

@@ -10,8 +10,19 @@ Move the joystick **left or right** to change screen.
 | **CO₂** | The CO₂ value in large digits and its history chart |
 | **CO₂ + climate** | The same, plus temperature and humidity |
 
-<div class="photo-todo" markdown>
-**TODO:** photos of the three screens
+<div class="screens" markdown>
+<figure markdown="span">
+  ![Big CO₂ screen: 1505 ppm framed in yellow](img/screen-large.jpg)
+  <figcaption>Big CO₂</figcaption>
+</figure>
+<figure markdown="span">
+  ![CO₂ screen: 1497 ppm and the history chart](img/screen-chart.jpg)
+  <figcaption>CO₂</figcaption>
+</figure>
+<figure markdown="span">
+  ![CO₂ + climate screen: 1492 ppm, 23.7 °C, 79 % and the chart](img/screen-climate.jpg)
+  <figcaption>CO₂ + climate</figcaption>
+</figure>
 </div>
 
 Each bar of the chart is the average of the readings over its time. By

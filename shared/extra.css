@@ -44,3 +44,43 @@ img.drawing {
   padding: 0.5rem;
   box-sizing: border-box;
 }
+
+/* Photos and screenshots. */
+.md-typeset figure img,
+.md-typeset img.hero {
+  border-radius: 6px;
+}
+/* md_in_html leaves a <br> between the image and its caption. */
+.md-typeset figure > br {
+  display: none;
+}
+.md-typeset figcaption {
+  margin-top: 0.6em;
+}
+/* The product photo at the top of the home page. */
+.md-typeset img.hero {
+  display: block;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+}
+/* Tall screenshots (the web page, the phone) stay narrow. */
+.md-typeset img.page  { max-width: 420px; width: 100%; }
+.md-typeset img.phone { max-width: 300px; width: 100%; }
+
+/* The three screens side by side; they stack on a narrow phone. */
+.screens {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.8rem;
+}
+@media (max-width: 30em) {
+  .screens { grid-template-columns: 1fr; }
+}
+.screens figure {
+  margin: 0;
+  width: 100%;
+}
+.screens figure img {
+  width: 100%;
+}

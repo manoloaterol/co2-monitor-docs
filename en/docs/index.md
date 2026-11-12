@@ -6,9 +6,7 @@ point. It publishes over MQTT and integrates automatically with systems such
 as Home Assistant, openHAB or Domoticz. It also works as a stand-alone
 monitor, with no need to join any network.
 
-<div class="photo-todo" markdown>
-**TODO:** product photo
-</div>
+![The CO₂ monitor showing 1490 ppm on its big CO₂ screen](img/device-angle.jpg){ .hero }
 
 [:material-cart: Buy on Tindie](https://www.tindie.com/TODO){ .md-button .md-button--primary }
 [:material-cart: Buy on Lectronz](https://lectronz.com/TODO){ .md-button }
@@ -49,3 +47,8 @@ New here? Start with [Getting started](getting-started.md).
 | In the box | CO₂ monitor, USB cable. No power adapter: any 5 V USB phone charger works |
 
 ![Dimension drawing: 56 × 56 × 16.5 mm, side, front and isometric views](assets/dimensions.svg){ .drawing }
+
+<figure markdown="span">
+  ![The board inside the case, with the Sensirion SCD30 sensor on top](img/device-inside.jpg)
+  <figcaption>Inside: the main board with the ESP32-S2 and, on top, the Sensirion SCD30 sensor.</figcaption>
+</figure>

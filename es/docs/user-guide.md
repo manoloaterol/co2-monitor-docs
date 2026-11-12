@@ -10,8 +10,19 @@ Mueve el joystick **a la izquierda o a la derecha** para cambiar de pantalla.
 | **CO₂** | El valor de CO₂ en grande y su gráfica histórica |
 | **CO₂ + ambiente** | Lo mismo, más temperatura y humedad |
 
-<div class="photo-todo" markdown>
-**TODO:** fotos de las tres pantallas
+<div class="screens" markdown>
+<figure markdown="span">
+  ![Pantalla CO₂ grande: 1505 ppm con marco amarillo](img/screen-large.jpg)
+  <figcaption>CO₂ grande</figcaption>
+</figure>
+<figure markdown="span">
+  ![Pantalla CO₂: 1497 ppm y la gráfica histórica](img/screen-chart.jpg)
+  <figcaption>CO₂</figcaption>
+</figure>
+<figure markdown="span">
+  ![Pantalla CO₂ + ambiente: 1492 ppm, 23,7 °C, 79 % y la gráfica](img/screen-climate.jpg)
+  <figcaption>CO₂ + ambiente</figcaption>
+</figure>
 </div>
 
 Cada barra de la gráfica es la media de las lecturas en su tiempo. Por
