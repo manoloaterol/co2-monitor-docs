@@ -5,13 +5,14 @@ lista completa, con las versiones, y lo que debería funcionar aunque no se
 haya validado, están en [MQTT y compatibilidad](mqtt.md#probado).
 
 Home Assistant, openHAB y Domoticz entienden los mensajes de autodescubrimiento
-del medidor y lo dan de alta solos. Solo necesitan llegar al mismo broker MQTT.
+del medidor y lo dan de alta solos. Solo tienen que estar conectados al mismo
+broker MQTT.
 Otros, como Node-RED, ioBroker o ThingsBoard, leen directamente los topics del
 medidor.
 
 Para openHAB y Domoticz, deja marcada **Alta automática en Home Assistant** en
 la página web del medidor, aunque no uses Home Assistant: leen los mismos
-mensajes. Si cambiaste el **Prefijo de descubrimiento**, usa el mismo en
+mensajes. Si cambiaste el **Prefijo de Discovery**, usa el mismo en
 ellos.
 
 Cualquier otro cliente MQTT puede leer directamente los topics planos. Están
@@ -33,7 +34,7 @@ a un broker, por ejemplo el complemento de Mosquitto.
 3. Guarda.
 
 El medidor aparece en Home Assistant como un dispositivo con tres sensores:
-CO₂, temperatura y humedad. Sale como no disponible cuando se desconecta. Su
+CO₂, temperatura y humedad. Aparece como no disponible cuando se desconecta. Su
 nombre es el ajuste **Nombre** de la página web.
 
 <figure markdown="span">
@@ -44,7 +45,7 @@ nombre es el ajuste **Nombre** de la página web.
 El descubrimiento usa mensajes retenidos en `homeassistant/sensor/…/config`,
 que apuntan a los mismos [topics](mqtt.md#topics). Los clientes que no son Home
 Assistant simplemente los ignoran. El sensor de CO₂ lleva además el atributo
-`chart_bar_s`, sacado de `info`, para que la tarjeta de más abajo dibuje la
+`chart_bar_s`, tomado de `info`, para que la tarjeta de más abajo dibuje la
 misma gráfica que la pantalla.
 
 Si Home Assistant usa otro prefijo de descubrimiento, cambia **Prefijo de
@@ -56,7 +57,7 @@ Assistant elimina entonces las entidades en lugar de dejarlas huérfanas.
 
 La **CO2 Monitor Card** muestra las pantallas del medidor en un panel de Home
 Assistant: la misma disposición, las mismas fuentes y la misma escala de
-colores, con la gráfica del historial. Las tres pantallas giran como un
+colores, con la gráfica del historial. Las tres pantallas rotan como un
 carrusel, y un toque pasa a la siguiente.
 
 <figure markdown="span">
@@ -172,7 +173,7 @@ Aparecen al momento dos dispositivos, ya en uso:
 Domoticz no usa el estado `offline` del medidor. Cuando el medidor se
 desconecta, los dispositivos conservan el último valor hasta que vence el
 **tiempo de espera de sensores** (*Sensor Timeout*) de los ajustes de Domoticz,
-60 minutos por defecto, y entonces lo marcan como sin datos.
+60 minutos por defecto, y entonces los marca como sin datos.
 
 ## Node-RED
 
@@ -210,12 +211,12 @@ menú (☰) → **Manage palette** → **Install**, buscando
   <figcaption>El flujo importado. El «connected» bajo los dos nodos MQTT indica que llega al broker.</figcaption>
 </figure>
 
-Abre `http://<node-red>:1880/dashboard` para ver un medidor de aguja con la
-escala de colores del monitor, la temperatura, la humedad, el estado y una
+Abre `http://<node-red>:1880/dashboard` para ver un indicador de aguja con la
+escala de colores del medidor, la temperatura, la humedad, el estado y una
 gráfica de las últimas seis horas. La gráfica se guarda en la memoria de
 Node-RED, así que vuelve a empezar vacía cuando Node-RED se reinicia. Las
 lecturas y el estado se ven también en la barra lateral de depuración y debajo
-de los nodos. Para hacer algo con el aviso, cambia el nodo **Ventilate** por una
+de los nodos. Para actuar con el aviso, cambia el nodo **Ventilate** por una
 notificación, un relé o lo que encaje en tu instalación.
 
 ??? example "Flujo de ejemplo"
@@ -341,7 +342,7 @@ y **Grafana**, que las dibuja.
 4. Descarga el [panel](assets/grafana-co2-monitor.json) e impórtalo desde
    **Dashboards → New → Import**, eligiendo esa fuente de datos.
 
-El panel muestra un medidor de CO₂ con la escala de colores del monitor, la
+El panel muestra un indicador de CO₂ con la escala de colores del medidor, la
 temperatura y la humedad actuales, y una gráfica de cada una. Cada medidor es
 una línea, con su código como nombre.
 
@@ -500,7 +501,7 @@ Cada medidor recibe como telemetría `co2`, `temperature`, `humidity` y `rssi`,
 y como atributos lo que publica en `<base>/info`: versiones, IP, nombre de
 red, tiempo encendido y motivo del último reinicio.
 
-El panel muestra el CO₂ con los colores del monitor, la temperatura y la
+El panel muestra el CO₂ con los colores del medidor, la temperatura y la
 humedad actuales, la ficha del medidor y una gráfica de cada lectura. Con
 varios medidores, elige cuál ver en el selector de la barra superior.
 
@@ -553,7 +554,8 @@ openssl x509 -in co2-monitor.crt -noout -fingerprint -sha256 | cut -d= -f2 | tr 
 
 La última orden da la huella SHA-256 en el formato que pide Azure.
 
-- **EC P-256** hace el saludo TLS bastante más rápido que RSA en el medidor.
+- **EC P-256** hace la negociación TLS (*handshake*) bastante más rápida que
+  RSA en el medidor.
 - **`-nodes`** deja la clave sin contraseña. El medidor no admite claves
   cifradas.
 - **El certificado caduca** a los 365 días. Antes de esa fecha, genera otro,
@@ -577,7 +579,7 @@ En el *namespace* de Event Grid, en el portal de Azure:
    ese topic space. El grupo `$all` sirve para empezar. En uso real, crea un
    grupo solo para los medidores.
 
-Para leer los datos desde otro cliente, dale de alta igual y añade un permiso
+Para leer los datos desde otro cliente, dalo de alta de la misma forma y añade un permiso
 **Subscriber** sobre el mismo topic space.
 
 ### 3. Configurar el medidor

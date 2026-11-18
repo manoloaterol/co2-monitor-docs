@@ -20,7 +20,7 @@ independiente, sin necesidad de conectarse a ninguna red.
   histórica. Los colores siguen guías publicadas de calidad del aire interior.
   Ver [Leer los colores](user-guide.md#leer-los-colores).
 - **Publica por MQTT** estándar, con o sin TLS. Ver [MQTT y compatibilidad](mqtt.md).
-- **Aparece solo en Home Assistant, openHAB y Domoticz** mediante el
+- **Aparece automáticamente en Home Assistant, openHAB y Domoticz** mediante el
   descubrimiento MQTT, sin escribir YAML. Ver [Integraciones](integrations.md).
 - **Se configura desde su propia página web.** Sin nube, sin cuenta y sin app.
   Ver [Página web y ajustes](web-page.md).
@@ -47,7 +47,7 @@ independiente, sin necesidad de conectarse a ninguna red.
 | Consumo | Unos 77 mA con brillo máximo (≈0,4 W), unos 43 mA con la pantalla apagada |
 | Dimensiones / peso | 56 × 56 × 16,5 mm, 35 g |
 | Caja | Impresa en 3D, PLA mate de color metálico |
-| En la caja | Medidor de CO₂, cable USB. Sin cargador: vale cualquier cargador USB de 5 V de móvil |
+| En la caja | Medidor de CO₂, cable USB. Sin cargador: vale cualquier cargador USB de móvil de 5 V |
 
 ![Plano de dimensiones: 56 × 56 × 16,5 mm, vistas lateral, frontal e isométrica](assets/dimensions.svg){ .drawing }
 

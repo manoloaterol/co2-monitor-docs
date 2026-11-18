@@ -16,13 +16,13 @@ arranque y en el topic MQTT `info`.
   junto a la que está en marcha y se comprueba antes de cambiar nada. Si la
   subida se corta, el firmware actual no se toca.
 - **La versión nueva arranca a prueba.** Tiene que demostrar que funciona:
-  una lectura real del sensor y una radio que no se ha quedado atascada
+  una lectura real del sensor, y que la Wi-Fi no se quede bloqueada
   intentando conectar. Si no lo consigue, el medidor vuelve a la versión
   anterior en el siguiente reinicio.
 - **Solo se acepta firmware de este aparato.**
 
 Tras la actualización, la página muestra la versión que está en marcha. Si
-sigue siendo la antigua, la nueva no llegó a arrancar y se ha vuelto atrás.
+sigue siendo la antigua, la nueva no llegó a arrancar y ha vuelto a la anterior.
 
 ### Los ajustes se conservan
 

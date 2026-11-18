@@ -6,7 +6,7 @@ Mueve el joystick **a la izquierda o a la derecha** para cambiar de pantalla.
 
 | Pantalla | Muestra |
 |---|---|
-| **CO₂ grande** | Solo el valor, a 85 px de alto, con un marco del color de su nivel. Se lee desde el otro lado de la habitación. Es la pantalla al arrancar |
+| **CO₂ grande** | Solo el valor, a 85 px de alto, con un marco del color de su nivel. Se lee desde el otro lado de la habitación. Es la que aparece al arrancar |
 | **CO₂** | El valor de CO₂ en grande y su gráfica histórica |
 | **CO₂ + ambiente** | Lo mismo, más temperatura y humedad |
 
@@ -25,8 +25,8 @@ Mueve el joystick **a la izquierda o a la derecha** para cambiar de pantalla.
 </figure>
 </div>
 
-Cada barra de la gráfica es la media de las lecturas en su tiempo. Por
-defecto hay 40 barras de 20 s, que dan 13 minutos de historia. Las dos cosas
+Cada barra de la gráfica es la media de las lecturas de su intervalo. Por
+defecto hay 40 barras de 20 s, que dan 13 minutos de historial. Las dos cosas
 se cambian en la [página web](web-page.md#pantalla).
 
 ## Joystick
@@ -61,7 +61,7 @@ Los umbrales se basan en guías publicadas de calidad del aire interior:
   de 1000 ppm es higiénicamente inocuo, de 1000 a 2000 ppm es elevado y por
   encima de 2000 ppm es inaceptable.
 - **UNE-EN 16798-1** (norma europea) y el **RITE** (categorías IDA). Fijan
-  límites sobre el aire exterior y sitúan el aire bueno en unos 800 a 950 ppm
+  los límites como un exceso sobre el aire exterior y sitúan el aire bueno en unos 800 a 950 ppm
   en valor absoluto.
 
 !!! note "Qué te dice el CO₂"
@@ -78,12 +78,12 @@ Los umbrales se basan en guías publicadas de calidad del aire interior:
 | Parpadeando | Esperando a la red o, si hay uno configurado, al broker | Esperando a que alguien se conecte |
 | Apagado | Wi-Fi desactivada, o LED apagado desde la web | — |
 
-El LED se puede apagar desde la página web, para un dormitorio. En modo
+El LED se puede apagar desde la página web, por ejemplo, en un dormitorio. En modo
 configuración se enciende igualmente.
 
 ## Si el sensor deja de responder
 
-Si el sensor no da lecturas durante 10 segundos, la pantalla pone guiones en
+Si el sensor no da lecturas durante 10 segundos, la pantalla muestra guiones en
 lugar de valores. También muestra un aviso rojo sobre la gráfica:
 **NO READINGS · CHECK THE SENSOR** (o **SIN LECTURAS · REVISA EL SENSOR** con
 la pantalla en castellano). La gráfica conserva su historial.
@@ -108,7 +108,7 @@ solo en modo configuración cuando no tiene ninguna red guardada.
 - pulsar **Reiniciar sin guardar** en la página;
 - esperar 5 minutos sin que nadie se conecte a su red.
 
-Sin una red guardada, el modo configuración espera lo que haga falta.
+Sin una red guardada, el modo configuración sigue activo indefinidamente.
 
 ## Idioma
 

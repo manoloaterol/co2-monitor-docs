@@ -10,7 +10,7 @@ cada sistema están en [Integraciones](integrations.md).
 | | |
 |---|---|
 | Protocolo | MQTT 3.1.1. Los brokers con MQTT 5 aceptan clientes 3.1.1 |
-| Papel | Solo publica. No se suscribe a ningún topic ni recibe órdenes |
+| Función | Solo publica. No se suscribe a ningún topic ni recibe órdenes |
 | Conexión | `mqtt://` sin cifrar o `mqtts://` con TLS 1.2, en cualquier puerto |
 | Certificado del broker | Siempre se verifica: contra las autoridades públicas más comunes, que lleva el firmware, o contra una CA propia en PEM |
 | Autenticación | Usuario y contraseña, certificado de cliente (TLS mutuo), o las dos cosas |
@@ -21,7 +21,7 @@ cada sistema están en [Integraciones](integrations.md).
 | Última voluntad | `<base>/status` pasa a `offline` si el medidor se desconecta sin avisar |
 | Descubrimiento | Formato de Home Assistant, con prefijo configurable. Se puede desactivar |
 
-**No admite:** MQTT 5 como protocolo propio, MQTT sobre WebSocket, TLS 1.3,
+**No admite:** MQTT 5 de forma nativa, MQTT sobre WebSocket, TLS 1.3,
 claves privadas protegidas con contraseña ni órdenes entrantes.
 
 ## Topics
@@ -46,8 +46,8 @@ pasar de 63 caracteres.
   20 s, la media de 10 lecturas. Un cliente MQTT ve la misma curva que la
   pantalla. `info` se refresca al conectar y cada 5 minutos.
 - **Plano o JSON.** Los topics planos y `state` llevan los mismos valores con
-  el mismo redondeo. `state` es lo cómodo para Telegraf/InfluxDB, Node-RED o
-  ioBroker, porque cada mensaje lleva una muestra entera.
+  el mismo redondeo. `state` es el más cómodo para Telegraf/InfluxDB, Node-RED
+  o ioBroker, porque cada mensaje lleva las tres lecturas a la vez.
 - **Estado.** El medidor publica `offline` antes de un reinicio voluntario.
   Si desaparece sin avisar, el broker publica `offline` por él, como su
   *last will*.
@@ -64,7 +64,7 @@ mosquitto_sub -h broker.local -u usuario -P clave -t 'co2monitor/#' -v
 defecto. Con ella, quien se suscribe recibe el último valor al instante. Sin
 ella, espera a la siguiente publicación.
 
-Mira siempre también `status`: un valor retenido de un medidor `offline` no
+Comprueba también `status`: un valor retenido de un medidor `offline` no
 es actual.
 
 ### Al reiniciar
@@ -161,4 +161,4 @@ el medidor:
 - **Otros sistemas que lean MQTT**, como Homey, Hubitat o FHEM, leyendo los
   topics del medidor.
 
-Si lo pruebas con alguno, nos ayuda saber cómo ha ido.
+Si lo pruebas con alguno, nos ayudará saber cómo te ha ido.

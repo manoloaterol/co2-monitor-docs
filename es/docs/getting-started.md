@@ -6,8 +6,8 @@ Conecta el medidor con el cable incluido a cualquier cargador USB. Basta con
 uno de 5 V y 0,5 A o más.
 
 La pantalla de arranque muestra tres versiones: la del firmware, la del
-hardware y la del firmware interno del sensor. Si la línea del sensor sale en
-rojo como `ERROR`, ver [Ayuda](help.md#no-readings-check-the-sensor).
+hardware y la del firmware interno del sensor. Si en la línea del sensor
+aparece `ERROR` en rojo, ver [Ayuda](help.md#no-readings-check-the-sensor).
 
 Las primeras lecturas salen en segundos y se estabilizan en unos minutos.
 
@@ -53,7 +53,7 @@ lleva el nombre de la red de configuración. Desde ahí se cambia cualquier
 ajuste, se actualiza el firmware o se calibra el sensor. Ver
 [Página web y ajustes](web-page.md).
 
-Si la dirección `.local` no abre, busca la IP del medidor en tu router y usa
-esa. Ver [Ayuda](help.md#la-direccion-local-no-abre).
+Si la dirección `.local` no se abre, busca la IP del medidor en tu router y usa
+esa. Ver [Ayuda](help.md#la-direccion-local-no-se-abre).
 
 El LED azul se queda fijo cuando el medidor está conectado. Ver [LED de estado](user-guide.md#led-de-estado).

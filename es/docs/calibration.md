@@ -86,7 +86,7 @@ poco. Si reacciona así, cualquier desviación se corrige calibrando.
 3. Apártate uno o dos metros y **no le respires encima**. Sigue la lectura
    desde el móvil.
 4. **Espera a que la lectura se estabilice.** El botón **Calibrar ahora** se
-   activa tras 2 minutos de lecturas sin cortes que varíen menos de 40 ppm.
+   activa tras 2 minutos seguidos de lecturas que no varíen más de 40 ppm.
    Esperar de 5 a 10 minutos es mejor.
 5. Pon la referencia. El aire exterior tiene unos **430 ppm** (2026), algo
    más cerca de una ciudad. Para otros años, toma el último valor de
@@ -106,7 +106,7 @@ este método copia su error.
 2. Espera 10–15 minutos sin tocar nada.
 3. En la página del medidor de referencia, sección **Calibración de CO₂**, lee
    la **media de los últimos 2 minutos**. No uses la lectura del momento: la
-   media es la que compara el otro medidor.
+   media es el valor con el que compara el otro medidor.
 4. En la página del medidor que quieres corregir, pon ese valor como
    referencia, pulsa **Calibrar ahora** y confirma.
 
@@ -120,15 +120,15 @@ o de más, aunque reacciona con normalidad al aliento y sigue la misma curva
 que otro medidor. Por ejemplo, 50 ppm en el exterior, o 400 ppm menos que el
 medidor de al lado en cualquier situación.
 
-El medidor no admite de primeras una corrección de más de 150 ppm, porque lo
+El medidor no admite de entrada una corrección de más de 150 ppm, porque lo
 habitual es que el aire no sirva de referencia. Si pones una referencia más
-lejana, la página no la rechaza: avisa y, al calibrar, pide una confirmación
+alejada de la lectura, la página no la rechaza: avisa y, al calibrar, pide una confirmación
 de **calibración amplia**.
 
 - **Solo con una referencia de confianza**: aire exterior en buenas
   condiciones, o un medidor calibrado justo al lado.
 - Las lecturas pueden variar hasta 150 ppm en los 2 minutos, en vez de 40.
-- Para deshacerla luego hace falta un aire con bastante CO₂. Ver
+- Para deshacerla luego hace falta aire con bastante CO₂. Ver
   [Deshacer](#deshacer).
 
 ### Qué comprueba el medidor
@@ -172,10 +172,10 @@ página o la API del medidor.
 
 ### Autocalibración
 
-El medidor no usa la autocalibración automática. Es una función del propio
+El medidor no usa la autocalibración. Es una función del propio
 sensor SCD30 (ASC), que da por hecho que el sensor ve aire fresco con
 regularidad, algo que en interior rara vez se cumple. El medidor nunca la
-activa ni la desactiva: solo la comprueba al arrancar. Si un sensor viniera con
+activa ni la desactiva: solo la comprueba al arrancar. Si un sensor viene con
 ella activada, la sección **Calibración de CO₂** muestra un aviso, porque en
 los días siguientes sustituiría a la calibración manual.
 
@@ -189,7 +189,7 @@ La sección **Calibración de CO₂** dice debajo del botón qué falta:
 |---|---|
 | La altitud del formulario no es la del sensor | Guarda, espera al reinicio y vuelve a la página |
 | El sensor no da lecturas | Ver [Ayuda](help.md#no-readings-check-the-sensor) |
-| Midiendo desde hace… | Espera: hacen falta 2 minutos de lecturas sin cortes. Un reinicio vuelve a empezar la cuenta |
+| Midiendo desde hace… | Espera: hacen falta 2 minutos de lecturas sin cortes. Tras un reinicio, la cuenta empieza de nuevo |
 | Las lecturas varían… ppm | El aire no está quieto. Ver la sección siguiente |
 | La referencia debe estar entre 400 y 2000 ppm | Corrige el número |
 
@@ -207,7 +207,7 @@ La sección **Calibración de CO₂** dice debajo del botón qué falta:
 
 #### Dos medidores no coinciden
 
-Dos sensores en tolerancia pueden diferir bastante, porque cada uno tiene su
+Dos sensores dentro de tolerancia pueden diferir bastante, porque cada uno tiene su
 propio margen:
 
 | Concentración | Margen de cada uno | Diferencia normal entre dos |
@@ -221,7 +221,7 @@ propio margen:
 - **Diferencias mayores, pero los dos siguen la misma curva:** uno de los dos
   está desviado. Sácalos al exterior para saber cuál, y calibra ese.
 - **La diferencia crece con la concentración:** es normal en parte. La
-  calibración corrige exactamente el punto donde se hace, así que calíbralo
+  calibración corrige exactamente el punto donde se hace, así que calibra
   cerca de los valores que más te importan.
 - **Uno reacciona distinto o mucho más lento:** no es un problema de
   calibración. Comprueba que los dos ven el mismo aire.
@@ -320,7 +320,7 @@ corrección*. Si muestra el valor nuevo, la corrección está aplicada. Espera
 
 #### Ahora marca menos que el termómetro
 
-La corrección se pasó. Escribe la diferencia con su signo, que será negativa:
+Te pasaste con la corrección. Escribe la diferencia con su signo, que será negativa:
 si el medidor dice 23,0 y el termómetro 23,5, escribe **-0,5**.
 
 #### Marca menos que el termómetro sin ninguna corrección
@@ -343,7 +343,7 @@ lectura sube con él. La corrección está pensada para cuando ya está estable.
 
 Corrige primero la temperatura: la humedad depende de ella. Si después sigue
 sin cuadrar, ten en cuenta que la tolerancia del SCD30 es de ±3 % de humedad
-relativa, y que muchos higrómetros domésticos fallan bastante más.
+relativa, y que muchos higrómetros domésticos tienen bastante más error.
 
 #### Fijar un valor exacto
 

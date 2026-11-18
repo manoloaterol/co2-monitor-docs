@@ -7,7 +7,7 @@ El firmware del medidor es software libre, bajo la
 El código fuente está en <https://github.com/manoloaterol/co2-monitor-firmware>. Los mismos avisos están en la propia
 página web del medidor, en **Sistema → Licencias**.
 
-Incluye el software de terceros que sigue. Sus avisos se reproducen aquí, tal
+Incluye el siguiente software de terceros. Sus avisos se reproducen aquí, tal
 como exigen sus licencias. Los textos legales se dejan en su idioma original.
 
 ## Driver del Sensirion SCD30

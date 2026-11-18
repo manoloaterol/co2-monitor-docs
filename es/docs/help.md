@@ -4,12 +4,12 @@
 
 Con la pantalla en castellano, **SIN LECTURAS · REVISA EL SENSOR**.
 
-El sensor lleva 10 segundos sin dar lecturas. La pantalla pone guiones, y la
+El sensor lleva 10 segundos sin dar lecturas. La pantalla muestra guiones, y la
 página web muestra lo mismo. El aviso desaparece solo en cuanto vuelve una
 lectura.
 
-Desenchufa el medidor y vuelve a enchufarlo. Si el aviso sigue, o la pantalla
-de arranque muestra la línea del sensor en rojo como `ERROR`, ponte en
+Desenchufa el medidor y vuelve a enchufarlo. Si el aviso sigue, o en la
+pantalla de arranque la línea del sensor muestra `ERROR` en rojo, ponte en
 contacto con nosotros. Ver [Contacto](#contacto).
 
 ## Las lecturas salen altas nada más enchufarlo
@@ -39,15 +39,15 @@ empieza con una tabla de cada situación y qué hacer.
 
 ## No se une a mi Wi-Fi
 
-- La red tiene que ser de **2,4 GHz**. 5 GHz no está soportado.
+- La red tiene que ser de **2,4 GHz**. Las redes de 5 GHz no son compatibles.
 - Revisa la contraseña. Entra en modo configuración (mantén pulsado el centro
   del joystick 3 segundos) y escríbela de nuevo.
-- Si tienes una consola serie conectada, registra el motivo de cada
+- Con una consola serie conectada, el medidor registra el motivo de cada
   desconexión: `201`, no encuentra la red; `202`, o `15` repetido, contraseña
   incorrecta; `200`, se perdió la señal.
 
-Si pierde la Wi-Fi, el medidor no se rinde nunca. Reintenta cada vez más
-espaciado: 1 s, 2 s, 4 s… hasta un intento por minuto.
+Si pierde la Wi-Fi, el medidor no se rinde nunca. Reintenta con intervalos
+cada vez mayores: 1 s, 2 s, 4 s… hasta un intento por minuto.
 
 ## La Wi-Fi llega débil donde quiero ponerlo
 
@@ -63,7 +63,7 @@ Wi-Fi con un repetidor o un sistema Wi-Fi mesh. El medidor se une a él como
 un aparato más, y su página web, la dirección `.local` y las actualizaciones
 siguen funcionando.
 
-## La dirección `.local` no abre
+## La dirección `.local` no se abre
 
 El nombre `co2-monitor-xxxxxx.local` funciona con mDNS. La mayoría de los
 ordenadores y móviles lo admiten, pero algunas redes, móviles Android antiguos

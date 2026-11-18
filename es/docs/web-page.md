@@ -5,8 +5,8 @@ El medidor sirve su propia página de ajustes:
 - en modo configuración, en `http://192.168.4.1`. Ver [Modo configuración](user-guide.md#modo-configuracion);
 - en tu red, en `http://co2-monitor-xxxxxx.local` o en su dirección IP.
 
-La página está en inglés y en castellano. Sale en el idioma de la pantalla, y
-el selector EN/ES de arriba recuerda otra elección en ese navegador.
+La página está en inglés y en castellano. Se abre en el idioma de la pantalla;
+si eliges otro con el selector EN/ES de arriba, ese navegador lo recuerda.
 
 <figure markdown="span">
   ![La página web del medidor: lectura y estado en vivo, y las secciones de ajustes plegadas](img/web-ui-es.png){ .page }
@@ -42,7 +42,7 @@ reinicia el medidor.
 
 | Ajuste | |
 |---|---|
-| Broker | `mqtt://host:1883` sin cifrar, o `mqtts://host:8883` con TLS. Vacío no publica nada |
+| Broker | `mqtt://host:1883` sin cifrar, o `mqtts://host:8883` con TLS. Si se deja vacío, no publica nada |
 | Usuario, Contraseña | Las credenciales del broker. Al cambiar el host del broker se borra la contraseña guardada, salvo que escribas otra |
 | Borrar la contraseña guardada | Para un broker sin contraseña, después de usar uno que la tenía |
 | Alta automática en Home Assistant | Activada por defecto. Ver [Home Assistant](integrations.md#home-assistant) |
@@ -52,7 +52,7 @@ En **Avanzado: topics y TLS**:
 
 | Ajuste | |
 |---|---|
-| Topic base | De donde cuelgan todos los topics. Vacío usa `co2monitor/xxxxxx`. Ver [Topics](mqtt.md#topics) |
+| Topic base | De donde cuelgan todos los topics. Si se deja vacío, usa `co2monitor/xxxxxx`. Ver [Topics](mqtt.md#topics) |
 | Retener las lecturas | Desactivado por defecto. Ver [Lecturas retenidas](mqtt.md#lecturas-retenidas) |
 | Certificado de la CA | Solo para un broker con CA propia. Ver [TLS](mqtt.md#tls) |
 | Certificado de cliente, clave privada | Para brokers que identifican al aparato por certificado. Ver [TLS](mqtt.md#certificados-de-cliente) |
@@ -61,8 +61,8 @@ En **Avanzado: topics y TLS**:
 
 | Ajuste | Por defecto | |
 |---|---|---|
-| Brillo | 100 % | Es la mayor parte del consumo |
-| Brillo atenuado | 3 % | El que da una pulsación corta. Con 0 la pantalla se apaga |
+| Brillo | 100 % | Es lo que más consume |
+| Brillo atenuado | 3 % | El que se aplica con una pulsación corta. Con 0 la pantalla se apaga |
 | Idioma de la pantalla | Inglés | Inglés o castellano |
 | LED de estado | Encendido | Ver [LED de estado](user-guide.md#led-de-estado) |
 | Barras de la gráfica | 40 | 20, 25, 40, 50 o 100 |
@@ -79,29 +79,30 @@ Cambiar la gráfica reinicia el medidor y vacía su historial.
 
 ### Calibración de CO₂
 
-Recalibra el sensor contra aire limpio y deshace la última calibración. Ver
+Recalibra el sensor con aire exterior o con otro medidor de referencia, y
+deshace la última calibración. Ver
 [Calibración de CO₂](calibration.md#calibracion-de-co2).
 
 ### Sistema
 
 | Ajuste | |
 |---|---|
-| Nombre | El que muestra Home Assistant. Vacío usa el nombre por defecto con el código del aparato |
+| Nombre | El que muestra Home Assistant. Si se deja vacío, usa el nombre por defecto con el código del aparato |
 | Versiones | Firmware, hardware y sensor SCD30 |
 | Actualizar firmware | Ver [Actualizar el firmware](firmware-update.md) |
 | Reiniciar sin guardar | Reinicia el medidor. En modo configuración, además, sale de él |
 
 ## Seguridad
 
-La página no tiene contraseña: cualquiera en tu red puede abrirla, igual que
-puede ver el aparato. Lo que sí impide es que una web de internet la use a
+La página no tiene contraseña: cualquiera en tu red puede abrirla, como en la
+mayoría de aparatos domésticos. Lo que sí impide es que una web de internet la use a
 través del navegador de alguien de tu casa:
 
 - Toda petición que cambia algo (guardar, reiniciar, subir firmware) debe
   llevar la cabecera `X-CO2-Monitor`. Una web ajena no puede añadirla sin
   preguntar antes al aparato, y el aparato nunca lo permite.
 - El medidor solo atiende peticiones dirigidas a una IP o a su propio nombre.
-  Eso frena el *DNS rebinding*.
+  Así se evita el *DNS rebinding*.
 - Al cambiar el host del broker se borra la contraseña MQTT guardada, salvo
   que se escriba otra. Nadie puede apuntar el medidor a su propio broker para
   quedarse con tu contraseña.
