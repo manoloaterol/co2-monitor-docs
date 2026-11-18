@@ -11,6 +11,9 @@ copyright: >-
 
 theme:
   name: material
+  # System fonts: nothing is downloaded (no Google Fonts), and it matches the
+  # monitor's own web page. The font stack is set in extra.css.
+  font: false
   logo: assets/logo.svg
   favicon: assets/favicon.svg
   icon:
