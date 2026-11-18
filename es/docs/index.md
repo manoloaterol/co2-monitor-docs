@@ -14,8 +14,8 @@ independiente, sin necesidad de conectarse a ninguna red.
 ## Qué hace
 
 - **Mide CO₂, temperatura y humedad** con un Sensirion SCD30. Es un sensor
-  de CO₂ NDIR de verdad, no una estimación "eCO₂" calculada a partir de otros
-  gases.
+  NDIR que mide el CO₂ directamente, no una estimación "eCO₂" calculada a
+  partir de otros gases.
 - **Los muestra en una pantalla IPS en color de 1,83"**, con una gráfica
   histórica. Los colores siguen guías publicadas de calidad del aire interior.
   Ver [Leer los colores](user-guide.md#leer-los-colores).
