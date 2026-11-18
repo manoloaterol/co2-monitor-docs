@@ -36,6 +36,11 @@ The monitor appears in Home Assistant as a device with three sensors: CO₂,
 temperature and humidity. It shows as unavailable when it goes offline. Its
 name is the **Name** setting on the web page.
 
+<figure markdown="span">
+  ![The monitor's device page in Home Assistant: model, firmware and hardware version, and the CO₂, humidity and temperature sensors](img/ha-device.png){ .page }
+  <figcaption>The monitor in Home Assistant, set up on its own by discovery.</figcaption>
+</figure>
+
 Discovery uses retained messages under `homeassistant/sensor/…/config`,
 which point to the same [topics](mqtt.md#topics). Clients that are not Home Assistant
 simply ignore them. The CO₂ sensor also carries the `chart_bar_s` attribute,
@@ -98,6 +103,16 @@ The steps are for the main UI of openHAB 5.
 4. Open the new Thing, go to **Channels** and link an item to each of them, or
    use **Add Equipment to Model** to do it in one go.
 
+<figure markdown="span">
+  ![The openHAB Inbox with four monitors found by discovery](img/openhab-inbox.png)
+  <figcaption>The Inbox, with every monitor on the broker found on its own.</figcaption>
+</figure>
+
+<figure markdown="span">
+  ![The monitor's Thing in openHAB, ONLINE, with its configuration topics filled in](img/openhab-thing.png)
+  <figcaption>The approved Thing, ONLINE. Discovery fills in its configuration.</figcaption>
+</figure>
+
 !!! warning "Units of CO₂ and humidity"
     openHAB stores CO₂ and humidity as dimensionless numbers. If the item has
     no unit, they appear as a fraction: `0.0026` instead of 2600 ppm, `0.48`
@@ -148,6 +163,11 @@ Two devices appear at once, already in use:
   under **Temperature**, with the comfort label Domoticz gives to humidity
   (Normal, Comfortable, Dry or Wet).
 
+<figure markdown="span">
+  ![The monitor's two devices on the Domoticz dashboard: temperature and humidity with the label Wet, and CO₂ with the label Bad](img/domoticz.png)
+  <figcaption>The two devices, marked as favourites so they show on the Domoticz dashboard.</figcaption>
+</figure>
+
 Domoticz does not use the monitor's `offline` status. When the monitor goes
 offline, the devices keep the last value until the **Sensor Timeout** in
 Domoticz's settings expires (60 minutes by default), and then they show a
@@ -167,9 +187,10 @@ monitor is online.
 The example below does just that. It shows the readings on a dashboard and
 warns when CO₂ goes above 1000 ppm and when it comes back down.
 
-<div class="photo-todo" markdown>
-**TODO:** screenshot of the Node-RED dashboard
-</div>
+<figure markdown="span">
+  ![Node-RED dashboard with the CO₂ gauge in the monitor's colours, temperature, humidity, a CO₂ chart and the status](img/nodered-dashboard.png){ .page }
+  <figcaption>The dashboard of the example flow.</figcaption>
+</figure>
 
 The dashboard is the **FlowFuse Dashboard** (Dashboard 2.0). Install it first
 from the menu (☰) → **Manage palette** → **Install**: search for
@@ -181,6 +202,11 @@ from the menu (☰) → **Manage palette** → **Install**: search for
 2. If you changed the **Topic base** on the monitor, use it in the two MQTT
    nodes. `co2monitor/+/…` matches every monitor with the default topic base.
 3. Press **Deploy**.
+
+<figure markdown="span">
+  ![The example flow in the Node-RED editor: the two MQTT nodes connected, the 1000 ppm warning and the dashboard widgets](img/nodered-flow.png)
+  <figcaption>The imported flow. Under the two MQTT nodes, "connected" shows that it reaches the broker.</figcaption>
+</figure>
 
 Open `http://<node-red>:1880/dashboard` to see a gauge with the monitor's
 color scale, temperature, humidity, the status and a chart of the last six
@@ -476,9 +502,10 @@ The dashboard shows CO₂ in the monitor's colours, the current temperature and
 humidity, the monitor's details and a chart of each reading. With several
 monitors, pick the one to show in the selector on the top bar.
 
-<div class="photo-todo" markdown>
-**TODO:** screenshot of the ThingsBoard dashboard
-</div>
+<figure markdown="span">
+  ![ThingsBoard dashboard: CO₂ in the monitor's colours, temperature, humidity, the monitor's details and a chart of each reading](img/thingsboard.png)
+  <figcaption>The dashboard, with the monitor chosen in the selector on the top bar.</figcaption>
+</figure>
 
 !!! note "Online or offline"
     The gateway cannot match `<base>/status` to a monitor, because that

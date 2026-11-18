@@ -36,6 +36,11 @@ El medidor aparece en Home Assistant como un dispositivo con tres sensores:
 CO₂, temperatura y humedad. Sale como no disponible cuando se desconecta. Su
 nombre es el ajuste **Nombre** de la página web.
 
+<figure markdown="span">
+  ![La ficha del medidor en Home Assistant: modelo, versión de firmware y de hardware, y los sensores de CO₂, humedad y temperatura](img/ha-device.png){ .page }
+  <figcaption>El medidor en Home Assistant, dado de alta solo por el descubrimiento.</figcaption>
+</figure>
+
 El descubrimiento usa mensajes retenidos en `homeassistant/sensor/…/config`,
 que apuntan a los mismos [topics](mqtt.md#topics). Los clientes que no son Home
 Assistant simplemente los ignoran. El sensor de CO₂ lleva además el atributo
@@ -99,6 +104,16 @@ Los pasos son para la interfaz principal de openHAB 5.
 4. Abre el Thing nuevo, ve a **Channels** y enlaza un item a cada canal, o usa
    **Add Equipment to Model** para hacerlo de una vez.
 
+<figure markdown="span">
+  ![El Inbox de openHAB con cuatro medidores encontrados por el descubrimiento](img/openhab-inbox.png)
+  <figcaption>El Inbox, con todos los medidores del broker encontrados solos.</figcaption>
+</figure>
+
+<figure markdown="span">
+  ![El Thing del medidor en openHAB, ONLINE, con sus topics de configuración rellenos](img/openhab-thing.png)
+  <figcaption>El Thing aprobado, en ONLINE. El descubrimiento rellena su configuración.</figcaption>
+</figure>
+
 !!! warning "Unidades del CO₂ y la humedad"
     openHAB guarda el CO₂ y la humedad como números sin dimensión. Si el item no
     tiene unidad, salen como una fracción: `0.0026` en vez de 2600 ppm, `0.48`
@@ -149,6 +164,11 @@ Aparecen al momento dos dispositivos, ya en uso:
   en **Temperatura**, con la etiqueta de confort que Domoticz da a la humedad
   (*Normal*, *Comfortable*, *Dry* o *Wet*).
 
+<figure markdown="span">
+  ![Los dos dispositivos del medidor en el panel de Domoticz: temperatura y humedad con la etiqueta Wet, y CO₂ con la etiqueta Bad](img/domoticz.png)
+  <figcaption>Los dos dispositivos, marcados como favoritos para que salgan en el panel de Domoticz.</figcaption>
+</figure>
+
 Domoticz no usa el estado `offline` del medidor. Cuando el medidor se
 desconecta, los dispositivos conservan el último valor hasta que vence el
 **tiempo de espera de sensores** (*Sensor Timeout*) de los ajustes de Domoticz,
@@ -168,9 +188,10 @@ medidor está conectado.
 El ejemplo de abajo hace justo eso. Muestra las lecturas en un panel y avisa
 cuando el CO₂ pasa de 1000 ppm y cuando vuelve a bajar.
 
-<div class="photo-todo" markdown>
-**TODO:** captura del panel de Node-RED
-</div>
+<figure markdown="span">
+  ![Panel de Node-RED con el indicador de CO₂ en los colores del medidor, temperatura, humedad, una gráfica de CO₂ y el estado](img/nodered-dashboard.png){ .page }
+  <figcaption>El panel del flujo de ejemplo.</figcaption>
+</figure>
 
 El panel es **FlowFuse Dashboard** (Dashboard 2.0). Instálalo antes desde el
 menú (☰) → **Manage palette** → **Install**, buscando
@@ -183,6 +204,11 @@ menú (☰) → **Manage palette** → **Install**, buscando
    `co2monitor/+/…` encaja con cualquier medidor que tenga el topic base por
    defecto.
 3. Pulsa **Deploy**.
+
+<figure markdown="span">
+  ![El flujo de ejemplo en el editor de Node-RED: los dos nodos MQTT conectados, el aviso de 1000 ppm y los widgets del panel](img/nodered-flow.png)
+  <figcaption>El flujo importado. El «connected» bajo los dos nodos MQTT indica que llega al broker.</figcaption>
+</figure>
 
 Abre `http://<node-red>:1880/dashboard` para ver un medidor de aguja con la
 escala de colores del monitor, la temperatura, la humedad, el estado y una
@@ -478,9 +504,10 @@ El panel muestra el CO₂ con los colores del monitor, la temperatura y la
 humedad actuales, la ficha del medidor y una gráfica de cada lectura. Con
 varios medidores, elige cuál ver en el selector de la barra superior.
 
-<div class="photo-todo" markdown>
-**TODO:** captura del panel de ThingsBoard
-</div>
+<figure markdown="span">
+  ![Panel de ThingsBoard: CO₂ en los colores del medidor, temperatura, humedad, los datos del medidor y una gráfica de cada lectura](img/thingsboard.png)
+  <figcaption>El panel, con el medidor elegido en el selector de la barra superior.</figcaption>
+</figure>
 
 !!! note "Conectado o desconectado"
     El gateway no puede asignar `<base>/status` a un medidor, porque ese
