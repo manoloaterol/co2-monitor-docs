@@ -60,8 +60,8 @@ colores, con la gráfica del historial. Las tres pantallas giran como un
 carrusel, y un toque pasa a la siguiente.
 
 <figure markdown="span">
-  ![Tres tarjetas CO2 Monitor en un panel de Home Assistant, en la pantalla de CO₂ grande](img/ha-card.png)
-  <figcaption>Tres medidores en un panel de Home Assistant, cada uno en su pantalla de CO₂ grande.</figcaption>
+  ![Las tres pantallas de la tarjeta en un panel de Home Assistant: CO₂ grande, CO₂ con su gráfica, y CO₂ con temperatura y humedad](img/ha-card.png)
+  <figcaption>Las tres pantallas de la tarjeta, iguales que en el medidor.</figcaption>
 </figure>
 
 La tarjeta es opcional: el medidor funciona en Home Assistant sin ella. La

@@ -59,8 +59,8 @@ dashboard: the same layout, typefaces and color scale, with the history chart.
 The three screens rotate like a carousel, and a tap moves to the next one.
 
 <figure markdown="span">
-  ![Three CO2 Monitor cards in a Home Assistant dashboard, on the big CO₂ screen](img/ha-card.png)
-  <figcaption>Three monitors in a Home Assistant dashboard, each one on its big CO₂ screen.</figcaption>
+  ![The card's three screens in a Home Assistant dashboard: big CO₂, CO₂ with its chart, and CO₂ with temperature and humidity](img/ha-card.png)
+  <figcaption>The card's three screens, the same as on the monitor.</figcaption>
 </figure>
 
 The card is optional: the monitor works in Home Assistant without it. The
