@@ -2,3 +2,6 @@
 # so both are pinned. See README.md.
 mkdocs==1.6.1
 mkdocs-material==9.7.7
+# Opens images full size on click. selectolax is its only dependency.
+mkdocs-glightbox==0.5.2
+selectolax==1.0.2

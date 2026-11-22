@@ -78,12 +78,16 @@ img.drawing {
 .md-typeset figcaption {
   margin-top: 0.6em;
 }
-/* The product photo at the top of the home page. */
+/* The product photo at the top of the home page: landscape, full width. */
 .md-typeset img.hero {
   display: block;
-  max-width: 480px;
   width: 100%;
-  margin: 0 auto;
+}
+
+/* A wider page than Material's 61rem, so screenshots get more room on large
+   screens. Narrower screens are unaffected. */
+.md-grid {
+  max-width: 72rem;
 }
 /* Tall screenshots (the web page, the phone) stay narrow. */
 .md-typeset img.page  { max-width: 420px; width: 100%; }

@@ -6,7 +6,7 @@ de acceso. Publica por MQTT y se integra automáticamente con sistemas como
 Home Assistant, openHAB o Domoticz. También funciona como medidor
 independiente, sin necesidad de conectarse a ninguna red.
 
-![El medidor de CO₂ marcando 1490 ppm en su pantalla de CO₂ grande](img/device-angle.jpg){ .hero }
+![El medidor de CO₂ marcando 1490 ppm en su pantalla de CO₂ grande](img/device-hero.jpg){ .hero }
 
 [:material-cart: Comprar en Tindie](https://www.tindie.com/TODO){ .md-button .md-button--primary }
 [:material-cart: Comprar en Lectronz](https://lectronz.com/TODO){ .md-button }

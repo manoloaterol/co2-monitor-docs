@@ -68,6 +68,15 @@ markdown_extensions:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
+# search is on by default, but listing plugins replaces the default, so it
+# goes first. glightbox opens an image full size on click, which the
+# screenshots need: the column is too narrow to read them otherwise.
+plugins:
+  - search
+  - glightbox:
+      skip_classes:
+        - drawing
+
 # Relative links, so the language switch works under any base path
 # (a GitHub project page lives under /<repo>/).
 extra:

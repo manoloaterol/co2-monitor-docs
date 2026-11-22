@@ -6,7 +6,7 @@ point. It publishes over MQTT and integrates automatically with systems such
 as Home Assistant, openHAB or Domoticz. It also works as a stand-alone
 monitor, with no need to join any network.
 
-![The CO₂ monitor showing 1490 ppm on its big CO₂ screen](img/device-angle.jpg){ .hero }
+![The CO₂ monitor showing 1490 ppm on its big CO₂ screen](img/device-hero.jpg){ .hero }
 
 [:material-cart: Buy on Tindie](https://www.tindie.com/TODO){ .md-button .md-button--primary }
 [:material-cart: Buy on Lectronz](https://lectronz.com/TODO){ .md-button }
