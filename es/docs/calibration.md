@@ -269,8 +269,8 @@ varían (`spread`).
 ## Temperatura
 
 El SCD30 se calienta un poco mientras funciona, y la electrónica de alrededor
-añade algo de calor. Por eso el medidor marca algo más que la habitación. El
-campo **Calibrar temperatura**, en **Sensor**, lo corrige.
+añade algo de calor. Por eso el medidor marca algo más que la habitación. La
+calibración de temperatura, en **Sensor**, lo corrige.
 
 - La corrección se **resta** de cada lectura. El sensor no puede sumar: solo
   corrige un medidor que marca de más.
@@ -287,28 +287,38 @@ caja, el brillo de la pantalla y el sitio. Mídela **tal como vas a usarlo**.
 1. Pon el medidor en su sitio, con la caja cerrada y el brillo que vayas a
    usar, junto a un termómetro de confianza. Los dos lejos del sol, de
    radiadores y de otros aparatos que calienten.
-2. Déjalo funcionando **20–30 minutos**.
-3. Escribe **lo que marca el medidor menos lo que marca el termómetro**. Si el
-   medidor dice 27,5 y el termómetro 25,0, escribe **2,5**.
-4. Guarda. El medidor se reinicia.
-5. **Espera 20–30 minutos** antes de volver a comparar. Ver la sección
-   siguiente.
+2. Déjalo funcionando. **Calibrar temperatura** se activa a los
+   **20 minutos**, cuando el medidor ya se ha calentado y la lectura lleva
+   2 minutos estable. La sección muestra cuánto falta.
+3. En **Sensor**, escribe **lo que marca el termómetro**. La página muestra
+   cómo quedará la corrección.
+4. Pulsa **Calibrar temperatura** y confirma. El medidor se reinicia.
 
-El valor se **suma** a la corrección actual, no la sustituye. Así, lo que
-mides después es siempre lo que falta corregir, sin cuentas. Deja el campo
-vacío salvo cuando estés calibrando.
+El medidor calcula la corrección él solo, con su propia media de los últimos
+2 minutos, y la suma a la que ya tenía. Así que siempre escribes la
+temperatura real, sea la primera calibración o un retoque posterior.
 
-### Qué esperar después de guardar
+El sensor no puede sumar grados. Si el termómetro marca más que el medidor
+incluso sin ninguna corrección, la corrección queda en 0, y la página lo
+avisa.
+
+### Qué esperar después de calibrar
 
 Dos cosas hacen que el cambio no se vea al momento:
 
-- **El reinicio.** Al guardar, el medidor se reinicia, y durante unos minutos
+- **El reinicio.** Al calibrar, el medidor se reinicia, y durante unos minutos
   vuelve a calentarse. La temperatura sube poco a poco hasta estabilizarse.
 - **El propio sensor.** El SCD30 no aplica la corrección de golpe: la lectura
   se va acercando al valor nuevo a lo largo de unos 10–15 minutos.
 
-No encadenes correcciones mirando la lectura al momento: acabarías corrigiendo
-de más.
+Por eso el botón espera 20 minutos después de cada reinicio: una segunda
+corrección hecha antes de que se asiente la primera corregiría de más.
+
+### Quitar la corrección
+
+**Quitar la corrección**, en **Sensor**, la vuelve a dejar en 0 y reinicia el
+medidor. Úsalo antes de volver a medir después de cambiar la caja, el brillo o
+el sitio, o para ver cuánto marca el medidor sin corrección.
 
 ### Problemas con la temperatura
 
@@ -316,12 +326,18 @@ de más.
 
 Mira la frase de la sección **Sensor**: *El sensor guarda ahora X °C de
 corrección*. Si muestra el valor nuevo, la corrección está aplicada. Espera
-20–30 minutos, como en [Qué esperar después de guardar](#que-esperar-despues-de-guardar).
+20–30 minutos, como en [Qué esperar después de calibrar](#que-esperar-despues-de-calibrar).
 
-#### Ahora marca menos que el termómetro
+#### El botón Calibrar temperatura no se activa
 
-Te pasaste con la corrección. Escribe la diferencia con su signo, que será negativa:
-si el medidor dice 23,0 y el termómetro 23,5, escribe **-0,5**.
+La línea de encima del botón dice qué falta:
+
+| La página dice | Qué hacer |
+|---|---|
+| Calentándose: faltan… | Espera. Cada reinicio vuelve a empezar los 20 minutos |
+| La temperatura varía… | Algo cerca da calor o corriente. Espera, o aparta los dos de ahí |
+| La corrección guardada aún no ha llegado al sensor | Se guardó por API sin reiniciar. Reinicia el medidor |
+| Escribe una temperatura entre -10 y 60 °C | Corrige el número |
 
 #### Marca menos que el termómetro sin ninguna corrección
 
@@ -330,9 +346,10 @@ en el mismo sitio. La tolerancia del SCD30 es de unos ±0,4 °C.
 
 #### Cambié la caja, el brillo o el sitio
 
-La corrección ya no vale: mídela otra vez. Para empezar de cero, escribe la
-corrección actual en negativo (si guarda 3,7 °C, escribe **-3,7**) y guarda.
-Después sigue los pasos de [Cómo hacerlo](#como-hacerlo).
+La corrección ya no vale. Vuelve a calibrar como en
+[Cómo hacerlo](#como-hacerlo): el medidor calcula la corrección nueva a partir
+de la que tiene. Si prefieres empezar de cero, pulsa antes **Quitar la
+corrección**.
 
 #### Sube durante un rato después de encenderlo
 
@@ -345,17 +362,27 @@ Corrige primero la temperatura: la humedad depende de ella. Si después sigue
 sin cuadrar, ten en cuenta que la tolerancia del SCD30 es de ±3 % de humedad
 relativa, y que muchos higrómetros domésticos tienen bastante más error.
 
-#### Fijar un valor exacto
-
-La página solo suma diferencias. Para escribir la corrección total, envíala
-por API en centésimas de grado. Por ejemplo, 2,90 °C:
+### Desde un script
 
 ```sh
+# Calibrar con un termómetro que marca 23,50 °C (en centésimas)
+curl -H 'X-CO2-Monitor: 1' -H 'Content-Type: application/json' \
+     -d '{"reference_c100": 2350}' http://co2-monitor-xxxxxx.local/api/temp
+
+# Quitar la corrección
+curl -H 'X-CO2-Monitor: 1' -H 'Content-Type: application/json' \
+     -d '{"clear": true}' http://co2-monitor-xxxxxx.local/api/temp
+
+# Fijar una corrección exacta, por ejemplo 2,90 °C
 curl -H 'X-CO2-Monitor: 1' -H 'Content-Type: application/json' \
      -d '{"temp_offset_c100": 290}' http://co2-monitor-xxxxxx.local/api/config
 
+# Después, reiniciar para que la corrección llegue al sensor
 curl -X POST -H 'X-CO2-Monitor: 1' http://co2-monitor-xxxxxx.local/api/reboot
 ```
 
-La corrección llega al sensor al arrancar. La página reinicia el medidor sola
-al guardar; por API hay que pedirlo, como en la segunda línea.
+La corrección llega al sensor al arrancar. La página reinicia el medidor sola;
+por API hay que pedirlo, como en la última línea. `/api/temp` se niega con
+`warmup`, `unstable`, `pending`, `sensor` o `range` en los mismos casos que el
+botón. `GET /api/status` devuelve en `tcal` la media de 2 minutos
+(`avg_c100`), cuánto varía (`spread_c100`) y si es estable (`ready`).

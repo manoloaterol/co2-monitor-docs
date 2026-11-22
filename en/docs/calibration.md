@@ -267,7 +267,7 @@ how much they vary (`spread`).
 
 The SCD30 warms itself slightly while it works, and the electronics around
 it add some heat. So the monitor reads a little higher than the room. The
-**Calibrate temperature** field, under **Sensor**, corrects this.
+temperature calibration, under **Sensor**, corrects this.
 
 - The correction is **subtracted** from every reading. The sensor cannot add:
   it only corrects a monitor that reads high.
@@ -285,27 +285,38 @@ going to use it**.
 1. Put the monitor in its place, with the case closed and the brightness you
    will use, next to a thermometer you trust. Keep both away from sunlight,
    radiators and other appliances that give off heat.
-2. Leave it running for **20–30 minutes**.
-3. Enter **what the monitor shows minus what the thermometer shows**. If the
-   monitor says 27.5 and the thermometer 25.0, enter **2.5**.
-4. Save. The monitor restarts.
-5. **Wait 20–30 minutes** before comparing again. See the next section.
+2. Leave it running. **Calibrate temperature** unlocks after **20 minutes**,
+   once the monitor has warmed up and the reading has been steady for
+   2 minutes. The section shows how long is left.
+3. Under **Sensor**, enter **what the thermometer shows**. The page shows what
+   the correction will become.
+4. Press **Calibrate temperature** and confirm. The monitor restarts.
 
-The value is **added** to the current correction, not written in its place.
-So what you measure afterwards is always what is left to correct, with no
-sums to do. Leave the field empty unless you are calibrating.
+The monitor works out the correction itself, from its own average of the last
+2 minutes, and adds it to the one it already had. So you always enter the
+real temperature, whether it is the first calibration or a later touch-up.
 
-### What to expect after saving
+The sensor cannot add degrees. If the thermometer shows more than the monitor
+reads with no correction at all, the correction stays at 0, and the page says
+so.
+
+### What to expect after calibrating
 
 Two things keep the change from showing straight away:
 
-- **The restart.** Saving restarts the monitor, and for a few minutes it warms
-  up again. The temperature climbs slowly until it settles.
+- **The restart.** Calibrating restarts the monitor, and for a few minutes it
+  warms up again. The temperature climbs slowly until it settles.
 - **The sensor itself.** The SCD30 does not apply the correction all at once:
   the reading moves towards the new value over about 10–15 minutes.
 
-Do not chain corrections while watching the reading: you would end up
-correcting too much.
+That is why the button waits 20 minutes after every restart: a second
+correction made before the first has settled would correct too much.
+
+### Removing the correction
+
+**Remove the correction**, under **Sensor**, sets it back to 0 and restarts
+the monitor. Use it before measuring again after changing the case, the
+brightness or the spot, or to see how the monitor reads with no correction.
 
 ### Temperature problems
 
@@ -313,12 +324,18 @@ correcting too much.
 
 Look at the sentence under **Sensor**: *The sensor now holds a correction of
 X °C*. If it shows the new value, the correction is in place. Wait 20–30
-minutes, as in [What to expect after saving](#what-to-expect-after-saving).
+minutes, as in [What to expect after calibrating](#what-to-expect-after-calibrating).
 
-#### Now it reads lower than the thermometer
+#### Calibrate temperature stays disabled
 
-The correction went too far. Enter the difference with its sign, which will be
-negative: if the monitor says 23.0 and the thermometer 23.5, enter **-0.5**.
+The line above the button says what is missing:
+
+| The page says | What to do |
+|---|---|
+| Warming up: … to go | Wait. Every restart starts the 20 minutes again |
+| The temperature varies… | Something nearby gives off heat or a draught. Wait, or move both away from it |
+| The stored correction has not reached the sensor yet | It was saved through the API without a restart. Restart the monitor |
+| Type a temperature between -10 and 60 °C | Correct the number |
 
 #### It reads lower than the thermometer with no correction at all
 
@@ -327,9 +344,10 @@ same spot. The SCD30's tolerance is about ±0.4 °C.
 
 #### I changed the case, the brightness or the spot
 
-The correction no longer holds: measure it again. To start from zero, enter
-the current correction as a negative (if it holds 3.7 °C, enter **-3.7**) and
-save. Then follow [How to do it](#how-to-do-it).
+The correction no longer holds. Calibrate again as in
+[How to do it](#how-to-do-it): the monitor works out the new correction from
+the one it has. If you would rather start from zero, press **Remove the
+correction** first.
 
 #### It climbs for a while after power-up
 
@@ -342,18 +360,28 @@ Correct the temperature first: the humidity depends on it. If it still does
 not match after that, bear in mind that the SCD30's tolerance is ±3 % relative
 humidity, and that many household hygrometers are much further off.
 
-#### Setting an exact value
-
-The page only adds differences. To write the total correction, send it
-through the API in hundredths of a degree. For 2.90 °C, for instance:
+### From a script
 
 ```sh
+# Calibrate against a thermometer reading 23.50 °C (in hundredths)
+curl -H 'X-CO2-Monitor: 1' -H 'Content-Type: application/json' \
+     -d '{"reference_c100": 2350}' http://co2-monitor-xxxxxx.local/api/temp
+
+# Remove the correction
+curl -H 'X-CO2-Monitor: 1' -H 'Content-Type: application/json' \
+     -d '{"clear": true}' http://co2-monitor-xxxxxx.local/api/temp
+
+# Set an exact correction, for instance 2.90 °C
 curl -H 'X-CO2-Monitor: 1' -H 'Content-Type: application/json' \
      -d '{"temp_offset_c100": 290}' http://co2-monitor-xxxxxx.local/api/config
 
+# Then restart, so the correction reaches the sensor
 curl -X POST -H 'X-CO2-Monitor: 1' http://co2-monitor-xxxxxx.local/api/reboot
 ```
 
 The correction reaches the sensor at start-up. The page restarts the monitor
-on its own when saving; through the API you have to ask, as in the second
-line.
+on its own; through the API you have to ask, as in the last line.
+`/api/temp` refuses with `warmup`, `unstable`, `pending`, `sensor` or `range`
+in the same cases as the button. `GET /api/status` gives in `tcal` the
+2-minute average (`avg_c100`), how much it varies (`spread_c100`) and whether
+it is steady (`ready`).
